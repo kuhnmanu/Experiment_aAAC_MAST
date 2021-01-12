@@ -46,7 +46,7 @@ totalRuns           = 3;
 while runNumber <= totalRuns
     % Check inputs from command line or previous run
     if ~exist('subject','var')
-        subject = '1';
+        subject = '';
     end
     if ~exist('prePostSession','var')
         prePostSession = '';
@@ -61,9 +61,9 @@ while runNumber <= totalRuns
         comment = 'no comment';
     end
     %%% Print visual feedback for experimenter to confirm
-    response = inputdlg({'ADMS_aACC ID#:', 'Session pre ("pre") / post ("post") MAST', 'Shock Min in mA', 'Shock Max in mA', 'Run:', 'Comment:'},...
+    response = inputdlg({'ADMS_aACC ID#:', 'Session pre ("pre") / post ("post") MAST', 'Shock Min in mA', 'Shock Max in mA', 'Run:', 'Include TCQ before run1:' 'Comment:'},...
         'aAAC Task - Please enter information', [1 75],...
-        {subject,  prePostSession, num2str(minShockStrengthInmA), num2str(maxShockStrengthInmA), num2str(runNumber),  comment});
+        {subject,  prePostSession, num2str(minShockStrengthInmA), num2str(maxShockStrengthInmA), num2str(runNumber), num2str("1"),  comment});
     if isempty(response)
         error(['User pressed "Cancel" for run #: ' num2str(runNumber) '. Please restart for this run.']);
     end
@@ -72,13 +72,14 @@ while runNumber <= totalRuns
     minShockStrengthInmA    = str2num(response{3});
     maxShockStrengthInmA    = str2num(response{4});
     runNumber               = str2double(response{5});
-    comment                 = response{6};
+    runTCQ                  = response{6};
+    comment                 = response{7};
     
     %%% Check if correct session pre-post mast is given.
     if isempty(prePostSession) || all(cellfun(@isempty,(strfind({'pre','post'}, prePostSession))))
-       error('Please specify correct pre/post MAST session');
+        error('Please specify correct pre/post MAST session');
     end
-  
+    
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %                 Initialize Experiment Environment
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -140,6 +141,12 @@ while runNumber <= totalRuns
         ShowInstruction;
         RunPracticeTrials;
     else
+        
+        %%% Run TCQ questionnaire before first run of AAC
+        if runNumber == 1 && runTCQ == 1
+            p = q_TCQ(p);
+        end
+        
         % Wait for Dummy Scans
         firstScannerPulseTime = WaitForDummyScans(p.mri.dummyScan);
         p.log.mriExpStartTime = firstScannerPulseTime;
@@ -231,10 +238,11 @@ end
         p.practice.topAversive         = [1 0 0 1 0 1 0 1 0 1 1 0 1 1 0];
         
         %%%%%%%%%%%%%%%%%%%%%%%%%%% Joystick Settings                      % Change these values for your setup!
-        if mr_joystick
-            p.joy.accelarationFactor                = 1;                       % Jump how many pxls
+        p.joy.mrjoystick                        = mr_joystick;
+        if p.joy.mrjoystick
+            p.joy.accelarationFactor            = 1;                       % Jump how many pxls
         else
-            p.joy.accelarationFactor                = 2;                       % Jump how many pxls
+            p.joy.accelarationFactor            = 2;                       % Jump how many pxls
         end
         p.joy.maxY                              = 65535;                   % Adjust this to your Joystick --> ToDo: Provide Routine to get this info
         p.joy.minY                              = 0;
