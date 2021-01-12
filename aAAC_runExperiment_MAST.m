@@ -61,9 +61,9 @@ while runNumber <= totalRuns
         comment = 'no comment';
     end
     %%% Print visual feedback for experimenter to confirm
-    response = inputdlg({'ADMS_aACC ID#:', 'Session pre ("pre") / post ("post") MAST', 'Shock Min in mA', 'Shock Max in mA', 'Run:', 'Include TCQ before run1:' 'Comment:'},...
+    response = inputdlg({'ADMS_aACC ID#:', 'Session pre ("pre") / post ("post") MAST', 'Shock Min in mA', 'Shock Max in mA', 'Run:', 'Comment:'},...
         'aAAC Task - Please enter information', [1 75],...
-        {subject,  prePostSession, num2str(minShockStrengthInmA), num2str(maxShockStrengthInmA), num2str(runNumber), num2str("1"),  comment});
+        {subject,  prePostSession, num2str(minShockStrengthInmA), num2str(maxShockStrengthInmA), num2str(runNumber), comment});
     if isempty(response)
         error(['User pressed "Cancel" for run #: ' num2str(runNumber) '. Please restart for this run.']);
     end
@@ -72,8 +72,7 @@ while runNumber <= totalRuns
     minShockStrengthInmA    = str2num(response{3});
     maxShockStrengthInmA    = str2num(response{4});
     runNumber               = str2double(response{5});
-    runTCQ                  = response{6};
-    comment                 = response{7};
+    comment                 = response{6};
     
     %%% Check if correct session pre-post mast is given.
     if isempty(prePostSession) || all(cellfun(@isempty,(strfind({'pre','post'}, prePostSession))))
@@ -142,11 +141,6 @@ while runNumber <= totalRuns
         RunPracticeTrials;
     else
         
-        %%% Run TCQ questionnaire before first run of AAC
-        if runNumber == 1 && runTCQ == 1
-            p = q_TCQ(p);
-        end
-        
         % Wait for Dummy Scans
         firstScannerPulseTime = WaitForDummyScans(p.mri.dummyScan);
         p.log.mriExpStartTime = firstScannerPulseTime;
@@ -176,11 +170,10 @@ end
 
 %% Set all parameters relevant for the experiment, run, and the subject
     function SetParameters
-        p.mri.on                                = p_mri_on;
         if runNumber == 0
-            p.mri.on = 0;
-            p_mri_on = 0;
+            p_mri_on = 0;                                                  % Force run0 not to be in scanner.
         end
+        p.mri.on                                = p_mri_on;
         p.mri.dummyScan                         = 2;
         p.totalRuns                             = totalRuns;
         p.comment                               = comment;
@@ -210,10 +203,10 @@ end
         p.hostIPaddress = char( p.hostaddress.getHostAddress);
         p.path.experiment              = [pwd filesep];
         p.path.instructionsFolder      = [p.path.experiment 'instructions/aAAC_Task_instructionsSlides_noButtons/']; % When using instructions without button presses
-        p.subID                        = sprintf('ADMS_aACC_%03d_%sMAST',str2double(subject), p.prePostMAST);
+        p.subID                        = sprintf('ADMS_aACC_%03d',str2double(subject));
         p.timestamp                    = datestr(now,30);
         p.path.subject                 = [p.path.experiment 'logs' filesep p.subID filesep];
-        p.path.save                    = [p.path.subject '_tmp_' p.subID '_run' num2str(p.runNumber) '_' p.timestamp];
+        p.path.save                    = [p.path.subject '_tmp_' p.subID '_' p.prePostMAST '_run' num2str(p.runNumber) '_' p.timestamp];
         if ~exist(p.path.subject,'dir'); mkdir(p.path.subject); end        % Create folder hierarchy
         addpath(genpath([p.path.experiment 'DS8R-MATLAB_official']));      % Add Digitimer dll and functions
         addpath(genpath([p.path.experiment 'daqtoolbox']));                % Add ML NI Daq control functions
