@@ -26,16 +26,17 @@
 %                                                                         %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-function [p] = aAAC_runExperiment(subject, runNumber,comment)              % args can be omitted and entered via GUI prompt
+function [p] = aAAC_runExperiment_MAST(subject, runNumber,comment)              % args can be omitted and entered via GUI prompt
 
 sca;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%% Put in your experiment choices here
 debug               = 0;                                                   % Use this function to have a transparent screen
-p_mri_on            = 0;                                                   % If on, waits for pulses
+p_mri_on            = 1;                                                   % If on, waits for pulses / never on for run 0 (calibration)
 screenNumber        = 2;                                                   % Select which monitor is used for presentatio: 0,1,2
-invertScreen        = 0;                                                   % Inverts presentation, e.g. for mock scanner
-mr_joystick         = 0;
+invertScreenCalib   = 1;                                                   % Inverts presentation on screen (e.g., when calibration is done in mock scanner at MIC)
+invertScreenRuns    = 0;                                                   % Inverts screen for actual runs (e.g., run1 - run3)
+mr_joystick         = 1;                                                   % When MR joystick is used, a different acceleration factor is set.
 
 if ~exist('runNumber','var')
     runNumber       = 0;
@@ -81,10 +82,6 @@ while runNumber <= totalRuns
     WaitSecs(0.001);
     
     SetParameters;
-    
-    if strcmp(p.hostname,'MICSTIM')                                            %%% To Do: Find out how micstim PC is called
-        debug = 0;
-    end
     
     SetPTB;
     
@@ -164,6 +161,10 @@ end
 %% Set all parameters relevant for the experiment, run, and the subject
     function SetParameters
         p.mri.on                                = p_mri_on;
+        if runNumber == 0
+            p.mri.on = 0;
+            p_mri_on = 0;
+        end
         p.mri.dummyScan                         = 2;
         p.totalRuns                             = totalRuns;
         p.comment                               = comment;
@@ -191,7 +192,7 @@ end
         p.hostaddress = java.net.InetAddress.getLocalHost ;
         p.hostIPaddress = char( p.hostaddress.getHostAddress);
         p.path.experiment              = [pwd filesep];
-        p.path.instructionsFolder      = [p.path.experiment 'instructions/aAAC_Task_instructionsSlides/'];
+        p.path.instructionsFolder      = [p.path.experiment 'instructions/aAAC_Task_instructionsSlides_noButtons/']; % When using instructions without button presses
         p.subID                        = sprintf('P50MCLaACC%03d',str2double(subject));
         p.timestamp                    = datestr(now,30);
         p.path.subject                 = [p.path.experiment 'logs' filesep p.subID filesep];
@@ -373,10 +374,13 @@ end
         p.joy.ScreenRelation           = p.ptb.height/p.joy.maxY-p.joy.minY;
         p.stim.distFromCenterAbs       = p.ptb.height/2*p.stim.distFromCenter;
         %%% Invert screen for presentation via mirrors, e.g. in mock scanner
-        if invertScreen
+        if invertScreenCalib && (runNumber == 0)
             Screen('glTranslate', p.ptb.w, p.ptb.width, 0, 0);             %translate the origin from upper left to upper right for mock scanner use
             Screen('glRotate', p.ptb.w, 180, 0, 1, 0);                     %rotate around y axis for mirror in mock scanner
-            p.path.instructionsFolder      = [p.path.experiment 'instructions/aAAC_Task_instructionsSlides_noButtons/']; % When using instructions without button presses
+        end
+        if invertScreenRuns && (runNumber >= 1)
+            Screen('glTranslate', p.ptb.w, p.ptb.width, 0, 0);             %translate the origin from upper left to upper right for mock scanner use
+            Screen('glRotate', p.ptb.w, 180, 0, 1, 0);                     %rotate around y axis for mirror in mock scanner
         end
         
         %%%%%%%%%%%%%%%%%%%%%%%%%%% Fixed Stimuli/Shapes to present
