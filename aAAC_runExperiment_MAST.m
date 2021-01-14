@@ -32,7 +32,7 @@ sca;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%% Put in your experiment choices here
 debug               = 0;                                                   % Use this function to have a transparent screen
-p_mri_on            = 1;                                                   % If on, waits for pulses / never on for run 0 (calibration)
+p_mri_on_init       = 1;                                                   % If on, waits for pulses / never on for run 0 (calibration)
 screenNumber        = 2;                                                   % Select which monitor is used for presentatio: 0,1,2
 invertScreenCalib   = 1;                                                   % Inverts presentation on screen (e.g., when calibration is done in mock scanner at MIC)
 invertScreenRuns    = 0;                                                   % Inverts screen for actual runs (e.g., run1 - run3)
@@ -44,6 +44,7 @@ end
 totalRuns           = 3;
 
 while runNumber <= totalRuns
+    p_mri_on = p_mri_on_init;
     % Check inputs from command line or previous run
     
     if ~exist('subject','var')
@@ -880,10 +881,12 @@ end
         end
         save(p.path.save ,'p');
         %%% Close all
-        ListenChar(0);
+        
         %if runNumber == 0 || runNumber == 3
         sca;                                                               % Close window:
         commandwindow;
+        ListenChar(0);
+        WaitSecs(10);
         %end
         % Use keys again
         %KbQueueRelease(p_ptb_device);
