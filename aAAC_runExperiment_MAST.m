@@ -45,6 +45,7 @@ totalRuns           = 3;
 
 while runNumber <= totalRuns
     % Check inputs from command line or previous run
+    
     if ~exist('subject','var')
         subject = '';
     end
@@ -60,19 +61,21 @@ while runNumber <= totalRuns
     if ~exist('comment', 'var')
         comment = 'no comment';
     end
-    %%% Print visual feedback for experimenter to confirm
-    response = inputdlg({'ADMS_aACC ID#:', 'Session pre ("pre") / post ("post") MAST', 'Shock Min in mA', 'Shock Max in mA', 'Run:', 'Comment:'},...
-        'aAAC Task - Please enter information', [1 75],...
-        {subject,  prePostSession, num2str(minShockStrengthInmA), num2str(maxShockStrengthInmA), num2str(runNumber), comment});
-    if isempty(response)
-        error(['User pressed "Cancel" for run #: ' num2str(runNumber) '. Please restart for this run.']);
+    if runNumber < 2
+        %%% Print visual feedback for experimenter to confirm
+        response = inputdlg({'ADMS_aACC ID#:', 'Session pre ("pre") / post ("post") MAST', 'Shock Min in mA', 'Shock Max in mA', 'Run:', 'Comment:'},...
+            'aAAC Task - Please enter information', [1 75],...
+            {subject,  prePostSession, num2str(minShockStrengthInmA), num2str(maxShockStrengthInmA), num2str(runNumber), comment});
+        if isempty(response)
+            error(['User pressed "Cancel" for run #: ' num2str(runNumber) '. Please restart for this run.']);
+        end
+        subject                 = response{1};
+        prePostSession          = response{2};
+        minShockStrengthInmA    = str2num(response{3});
+        maxShockStrengthInmA    = str2num(response{4});
+        runNumber               = str2double(response{5});
+        comment                 = response{6};
     end
-    subject                 = response{1};
-    prePostSession          = response{2};
-    minShockStrengthInmA    = str2num(response{3});
-    maxShockStrengthInmA    = str2num(response{4});
-    runNumber               = str2double(response{5});
-    comment                 = response{6};
     
     %%% Check if correct session pre-post mast is given.
     if isempty(prePostSession) || all(cellfun(@isempty,(strfind({'pre','post'}, prePostSession))))
@@ -877,9 +880,12 @@ end
         end
         save(p.path.save ,'p');
         %%% Close all
+        ListenChar(0);
+        %if runNumber == 0 || runNumber == 3
         sca;                                                               % Close window:
         commandwindow;
-        ListenChar(0);                                                     % Use keys again
+        %end
+        % Use keys again
         %KbQueueRelease(p_ptb_device);
     end
 end
