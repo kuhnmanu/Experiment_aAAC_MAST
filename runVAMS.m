@@ -44,7 +44,14 @@ v.scala.stepsize            = 3;
 v.scala.displayposition     = 0;
 v.scala.scalaposition       = 0.5;
 v.scala.width               = 7;
-v.scala.range               = 2;
+v.scala.rangeSetting        = 2;
+if v.scala.rangeSetting == 1
+    v.scala.leftEnd = -100;
+    v.scala.rightEnd = 100;
+elseif v.scala.rangeSetting == 2
+    v.scala.leftEnd =    0;
+    v.scala.rightEnd = 100;
+end
 % Keys
 HideCursor;
 KbName('UnifyKeyNames');
@@ -90,7 +97,7 @@ for q = 1:size(questions,2)
         'displayposition', v.scala.displayposition,...
         'scalaPosition', v.scala.scalaposition,...
         'width', v.scala.width,...
-        'range', v.scala.range);
+        'range', v.scala.rangeSetting);
     logFieldName = ['Question' num2str(q)];
     v.log.(logFieldName).question = currQ{1};
     v.log.(logFieldName).leftAnchor = currQ{2};
