@@ -214,6 +214,7 @@ end
         if ~exist(p.path.subject,'dir'); mkdir(p.path.subject); end        % Create folder hierarchy
         addpath(genpath([p.path.experiment 'DS8R-MATLAB_official']));      % Add Digitimer dll and functions
         addpath(genpath([p.path.experiment 'daqtoolbox']));                % Add ML NI Daq control functions
+        addpath(genpath([p.path.experiment 'resources']));
         
         %%%%%%%%%%%%%%%%%%%%%%%%%%% font size and background gray level
         p.text.fontname                         = 'Arial';
