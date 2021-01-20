@@ -65,7 +65,6 @@ v.keys.select  = KbName('r');
 % Get information about the screen and set general things
 Screen('Preference', 'SuppressAllWarnings',1);
 Screen('Preference', 'SkipSyncTests', 1);
-Screen('Preference', 'SkipSyncTests', 1);
 Screen('Preference', 'VisualDebuglevel', 0);
 
 % Creating screen etc.
