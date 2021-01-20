@@ -32,7 +32,7 @@ v.path.subject                 = [v.path.experiment 'logs' filesep v.subID files
 if ~exist(v.path.subject,'dir'); mkdir(v.path.subject); end
 v.path.save                    = [v.path.subject filesep v.subID '_VAMS_' num2str(v.vamsNumber) '_' v.timestamp];
 v.comment                      = comment;
-addpath([pwd filesep 'VAMS']);
+addpath([pwd filesep 'addResources']);
 
 % Apearances
 v.scala.colors.bgColor      = [50 50 50];

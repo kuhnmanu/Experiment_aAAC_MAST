@@ -287,40 +287,40 @@ KbWait(-3);                 %%% Put space press here!
 
 DrawFormattedText(p.ptb.w,'Put your hand in the water','center','center',White);
 Screen('Flip',p.ptb.w);
-%WaitSecs(90);
-WaitSecs(5);
+WaitSecs(90);
+%WaitSecs(5);
 DrawFormattedText(p.ptb.w,'Take your hand out of the water and count \n backwards from 2043 in steps of 17','center','center',White);
 Screen('Flip',p.ptb.w);
-%WaitSecs(90);
-WaitSecs(5);
+WaitSecs(90);
+%WaitSecs(5);
 DrawFormattedText(p.ptb.w,'Put your hand in the water','center','center',White);
 Screen('Flip',p.ptb.w);
-%WaitSecs(60);
-WaitSecs(5);
+WaitSecs(60);
+%WaitSecs(5);
 DrawFormattedText(p.ptb.w,'Take your hand out of the water and count \n backwards from 2064 in steps of 17','center','center',White);
 Screen('Flip',p.ptb.w);
-%WaitSecs(60);
-WaitSecs(5);
+WaitSecs(60);
+%WaitSecs(5);
 DrawFormattedText(p.ptb.w,'Put your hand in the water','center','center',White);
 Screen('Flip',p.ptb.w);
-%WaitSecs(45);
-WaitSecs(5);
+WaitSecs(45);
+%WaitSecs(5);
 DrawFormattedText(p.ptb.w,'Take your hand out of the water and count \n backwards from 2032 in steps of 17','center','center',White);
 Screen('Flip',p.ptb.w);
-%WaitSecs(90);
-WaitSecs(5);
+WaitSecs(90);
+%WaitSecs(5);
 DrawFormattedText(p.ptb.w,'Put your hand in the water','center','center',White);
 Screen('Flip',p.ptb.w);
-%WaitSecs(90);
-WaitSecs(5);
+WaitSecs(90);
+%WaitSecs(5);
 DrawFormattedText(p.ptb.w,'Take your hand out of the water and count \n backwards from 2091 in steps of 17','center','center',White);
 Screen('Flip',p.ptb.w);
-%WaitSecs(60);
-WaitSecs(5);
+WaitSecs(60);
+%WaitSecs(5);
 DrawFormattedText(p.ptb.w,'Put your hand in the water','center','center',White);
 Screen('Flip',p.ptb.w);
-%WaitSecs(45);
-WaitSecs(5);
+WaitSecs(45);
+%WaitSecs(5);
 
 
 

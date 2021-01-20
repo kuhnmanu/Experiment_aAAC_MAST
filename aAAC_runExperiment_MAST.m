@@ -39,7 +39,7 @@ invertScreenRuns    = 0;                                                   % Inv
 mr_joystick         = 1;                                                   % When MR joystick is used, a different acceleration factor is set.
 
 if ~exist('runNumber','var')
-    runNumber       = 0;
+    runNumber       = '';
 end
 totalRuns           = 3;
 
@@ -54,10 +54,10 @@ while runNumber <= totalRuns
         prePostSession = '';
     end
     if ~exist('maxShockStrengthInmA', 'var')
-        maxShockStrengthInmA = 0;
+        maxShockStrengthInmA = '';
     end
     if ~exist('minShockStrengthInmA', 'var')
-        minShockStrengthInmA = 0;
+        minShockStrengthInmA = '';
     end
     if ~exist('comment', 'var')
         comment = 'no comment';
@@ -214,7 +214,7 @@ end
         if ~exist(p.path.subject,'dir'); mkdir(p.path.subject); end        % Create folder hierarchy
         addpath(genpath([p.path.experiment 'DS8R-MATLAB_official']));      % Add Digitimer dll and functions
         addpath(genpath([p.path.experiment 'daqtoolbox']));                % Add ML NI Daq control functions
-        addpath(genpath([p.path.experiment 'resources']));
+        addpath(genpath([p.path.experiment 'addResources']));
         
         %%%%%%%%%%%%%%%%%%%%%%%%%%% font size and background gray level
         p.text.fontname                         = 'Arial';
@@ -333,7 +333,7 @@ end
         p.log.sessShockLevelsInmA = linspace(p.log.minShockStrengthInmA,p.log.maxShockStrengthInmA,p.TrialRecord.NumberOfLevels);
         
         % Triallist
-        timingList                  = load([p.path.experiment 'jitterTimingList.mat']);
+        timingList                  = load([p.path.experiment filesep 'addResources' filesep 'jitterTimingList.mat']);
         p.timingList                = timingList.jitterTiminglist;
         p.presentation.trialNum     = cell2mat(p.timingList(2:end, 1));
         p.presentation.itd          = cell2mat(p.timingList(2:end, 2));
@@ -886,7 +886,7 @@ end
         %if runNumber == 0 || runNumber == 3
         sca;                                                               % Close window:
         commandwindow;
-        ListenChar(0);
+        %ListenChar(0);
         WaitSecs(10);
         %end
         % Use keys again
