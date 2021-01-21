@@ -317,7 +317,7 @@ end
         p.TrialRecord.FractionRandomOffers = 1 - p.TrialRecord.FractionVariBoundaryOffers - p.TrialRecord.FractionCloseBoundOffers; % any offers not "close" or "variable" will be random
         p.TrialRecord.CondProb = [p.TrialRecord.FractionCloseBoundOffers p.TrialRecord.FractionVariBoundaryOffers p.TrialRecord.FractionRandomOffers];   % now "conditions" are CloseBound, VariBoundary and Random
         p.TrialRecord.CondPseudorandBlocksize = 10;   % makes sure that conditions are chosen pseudorandomly over this block size according to probabilities in CondProb
-        p.TrialRecord.BoundaryBlurVariBound = 10;  % for VariBound offers
+        p.TrialRecord.BoundaryBlurVariBound = 20;  % for VariBound offers
         p.TrialRecord.BoundaryBlurCloseBound = 5; % for matched offers
         p.TrialRecord.AversionLow = 10;
         p.TrialRecord.AversionHigh = 100;
