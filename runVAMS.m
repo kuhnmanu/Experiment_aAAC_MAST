@@ -76,9 +76,13 @@ end
 Screen('Preference', 'SuppressAllWarnings',1);
 Screen('Preference', 'SkipSyncTests', 1);
 Screen('Preference', 'VisualDebuglevel', 0);
-
+FontName = 'Arial';
 % Creating screen etc.
-[myScreen, rect] = Screen('OpenWindow', 1, v.scala.colors.bgColor);
+[v.ptb.w, rect] = Screen('OpenWindow', 1, v.scala.colors.bgColor);
+Screen('TextStyle', v.ptb.w, 1);                                   % Make Text Bold
+Screen('BlendFunction', v.ptb.w, GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+Screen('Flip',v.ptb.w);                                            % Make the bg
+Screen('TextFont',v.ptb.w,FontName);
 
 questions = {{'How do you feel at this moment?', 'Happy', 'Sad'},...
     {'How do you feel at this moment?', 'Tense', 'Relaxed'},...
@@ -92,7 +96,7 @@ for q = 1:size(questions,2)
     question  = currQ{1};
     endPoints = {currQ{2}, currQ{3}};
     
-    [position, RT, answer] = slideScale(myScreen, ...
+    [position, RT, answer] = slideScale(v.ptb.w, ...
         question, ...
         rect, ...
         endPoints, ...
