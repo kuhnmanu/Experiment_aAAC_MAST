@@ -1,22 +1,27 @@
+function runVAMS(subject, vamsNumber, comment)
+
 % Preliminary stuff
 % check for Opengl compatibility, abort otherwise:
 AssertOpenGL;
 
-%%% Get subject and run
+%%% Get input
 
-%%%%%%%%%%%%%% GET POPUP WINDOW INPUT HERE %%%%%%%%%%%%%%%%
-
-response = inputdlg({'ADMS_aACC ID#:', 'VAMS#:' 'Comment:'},...
-    'aAAC Task - Please enter information', [1 75]);
-subject                 = response{1};
-vamsNumber              = str2double(response{2});
-comment                 = response{3};
-
-if isempty(subject) || isempty(vamsNumber)
+if nargin < 2
+    %%%%%%%%%%%%%% GET POPUP WINDOW INPUT HERE %%%%%%%%%%%%%%%%
+    response = inputdlg({'ADMS_aACC ID#:', 'VAMS#:' 'Comment:'},...
+        'aAAC Task - Please enter information', [1 75]);
+    subject                 = str2double(response{1});
+    vamsNumber              = str2double(response{2});
+    comment                 = response{3};
+    
+    if isempty(subject) || isempty(vamsNumber)
         error('Please specify details (subID and VAMS#).');
+    end
 end
 
-
+if ~exist('comment', 'var')
+    comment = '';
+end
 
 %%%% Preparations
 [~, hostname] = system('hostname');
@@ -25,7 +30,7 @@ v.hostaddress = java.net.InetAddress.getLocalHost ;
 v.hostIPaddress = char( v.hostaddress.getHostAddress);
 v.path.experiment              = [pwd filesep];
 
-v.subID                        = sprintf('ADMS_aACC_%03d',str2double(subject));
+v.subID                        = sprintf('ADMS_aACC_%03d', subject);
 v.vamsNumber                   = vamsNumber;
 v.timestamp                    = datestr(now,30);
 v.path.subject                 = [v.path.experiment 'logs' filesep v.subID filesep];
@@ -55,10 +60,15 @@ end
 % Keys
 HideCursor;
 KbName('UnifyKeyNames');
-v.keys.left  = KbName('g');
-v.keys.right = KbName('b');
-v.keys.select  = KbName('r');
-
+if vamsNumber < 5
+    v.keys.left  = KbName('g');
+    v.keys.right = KbName('b');
+    v.keys.select  = KbName('r');
+elseif vamsNumber == 5
+    v.keys.left  = KbName('LeftArrow');
+    v.keys.right = KbName('RightArrow');
+    v.keys.select  = KbName('UpArrow');
+end
 % Back ground colour
 
 
@@ -106,6 +116,9 @@ for q = 1:size(questions,2)
     v.log.(logFieldName).answeredYesNo = answer;
     
 end
+
+
+%%% MAKE SPREADSHEET AT SOME POINT!
 
 %%%%%%%%%% SAVE ANSWERS INTO STRUCT AND FILE %%%%%%%%%%%%%%
 save(v.path.save ,'v');
