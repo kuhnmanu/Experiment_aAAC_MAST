@@ -20,7 +20,7 @@ p.ptb.screenNumber                      = 2;
 commandwindow;
 clear mex global
 p.stim.bg                               = [50 50 50];
-
+ListenChar(2);
 %%%%%%%%%%%%%%%%%%%%%%%%%%% Default parameters
 Screen('Preference', 'SkipSyncTests', 1);
 %Screen('Preference', 'DefaultFontSize', p.text.fontsize);
@@ -59,31 +59,31 @@ WaitSecs(0.001);
 
 % MAST instructions, TCQ and trials (press key to go through)
 % MAST instructions
-DrawFormattedText(p.ptb.w,'In the following task you will be asked to immerse \n your entire hand, including your wrist, \n in ice cold water for as long as possible. \n There will be multiple trials where you have to immerse \n your hand in the water and the duration of each \n trial is randomly chosen by the computer.','center','center',White,90);
+DrawFormattedText(p.ptb.w,'In the following task you will be asked to immerse \n your entire hand, including your wrist, \n in ice cold water for as long as possible. \n There will be multiple trials where you have to immerse \n your hand in the water and the duration of each \n trial is randomly chosen by the computer.','center','center',White,90,[],[],1.25);
 Screen('Flip',p.ptb.w);
 WaitSecs(1);
 KbWait(-3);
-DrawFormattedText(p.ptb.w,'We will also tell you when to put your hand in and \n take it out. \n Because you will go back into the scanner \n after this task, you must not move \n your head when putting your hand into the water.','center','center',White,90);
+DrawFormattedText(p.ptb.w,'We will also tell you when to put your hand in and \n take it out. \n Because you will go back into the scanner \n after this task, you must not move \n your head when putting your hand into the water.','center','center',White,90,[],[],1.25);
 Screen('Flip',p.ptb.w);
 WaitSecs(1);
 KbWait(-3);
-DrawFormattedText(p.ptb.w,'When the computer signals that it is time to \n take your hand out of the water \n you will remove your hand from the water and \n immediately start a mental arithmetic test \n where you must count backwards from the number shown \n on the screen in steps of 17 as quickly as possible.', 'center','center', White,90);
+DrawFormattedText(p.ptb.w,'When the computer signals that it is time to \n take your hand out of the water \n you will remove your hand from the water and \n immediately start a mental arithmetic test \n where you must count backwards from the number shown \n on the screen in steps of 17 as quickly as possible.', 'center','center', White,90,[],[],1.25);
 Screen('Flip',p.ptb.w);
 WaitSecs(1);
 KbWait(-3);
-DrawFormattedText(p.ptb.w,'You can rest your hand on the towel during the \n arithmetic test. \n You must continue with the arithhmetic test until \n the computer signals the start of the next \n hand immersion trial.','center','center',White,90);
+DrawFormattedText(p.ptb.w,'You can rest your hand on the towel during the \n arithmetic test. \n You must continue with the arithhmetic test until \n the computer signals the start of the next \n hand immersion trial.','center','center',White,90,[],[],1.25);
 Screen('Flip',p.ptb.w);
 WaitSecs(1);
 KbWait(-3);
-DrawFormattedText(p.ptb.w,'Your counting will be monitored by the evaluators. \n Every time you make a mistake you will \n start the test over. \n Insufficient results on the test will require you to \n do the whole task again, so try to perform \n as well as possible','center','center',White,90);
+DrawFormattedText(p.ptb.w,'Your counting will be monitored by the evaluators. \n Every time you make a mistake you will \n start the test over. \n Insufficient results on the test will require you to \n do the whole task again, so try to perform \n as well as possible.','center','center',White,90,[],[],1.25);
 Screen('Flip',p.ptb.w);
 WaitSecs(1);
 KbWait(-3);
-DrawFormattedText(p.ptb.w,'The ice water is very cold and if it becomes \n unbearable you have the right to remove your hand \n if you really need to.  \n However, on each trial, we ask that you try to keep \n your hand in the water for as long as possible.','center','center',White,90);
+DrawFormattedText(p.ptb.w,'The ice water is very cold and if it becomes \n unbearable you have the right to remove your hand \n if you really need to.  \n However, on each trial, we ask that you try to keep \n your hand in the water for as long as possible.','center','center',White,90,[],[],1.25);
 Screen('Flip',p.ptb.w);
 WaitSecs(1);
 KbWait(-3);
-DrawFormattedText(p.ptb.w,'During this portion of the study you will be videotaped \n and later the videotapes will be analysed \n for facial expressions of pain.','center','center',White,90);
+DrawFormattedText(p.ptb.w,'During this portion of the study you will be videotaped \n and later the videotapes will be analysed \n for facial expressions of pain.','center','center',White,90,[],[],1.5);
 Screen('Flip',p.ptb.w);
 WaitSecs(1);
 KbWait(-3);
@@ -180,9 +180,9 @@ blockStart = GetSecs;
 for trial = 1:11
     
     % draw question
-    DrawFormattedText(p.ptb.w,'Please indicate how you are feeling right now about \n the cognitive task you are about to begin','center',Yres/8,White);
+    DrawFormattedText(p.ptb.w,'Please indicate how you are feeling right now about \n the cognitive task you are about to begin','center',Yres/8,White,90,[],[],1.25);
     
-    DrawFormattedText(p.ptb.w,question{trial},'center',Yres/4,Yellow);
+    DrawFormattedText(p.ptb.w,question{trial},'center',Yres/4,Yellow,90,[],[],1.25);
     
     DrawFormattedText(p.ptb.w,'Strongly disagree',Xres/2-380,Yres/2.5,Red);
     DrawFormattedText(p.ptb.w,'Neutral',Xres/2-40,Yres/2.5,Red);
@@ -252,9 +252,9 @@ for trial = 1:11
         else
             Screen('FrameRect',p.ptb.w,Red,Rbox,2);
         end
-        DrawFormattedText(p.ptb.w,'Please indicate how you are feeling right now about \n the cognitive task you are about to begin','center',Yres/8,White);
+        DrawFormattedText(p.ptb.w,'Please indicate how you are feeling right now about \n the cognitive task you are about to begin','center',Yres/8,White,90,[],[],1.25);
         
-        DrawFormattedText(p.ptb.w,question{trial},'center',Yres/4,Yellow);
+        DrawFormattedText(p.ptb.w,question{trial},'center',Yres/4,Yellow,90,[],[],1.25);
         
         DrawFormattedText(p.ptb.w,'Strongly disagree',Xres/2-380,Yres/2.5,Red);
         DrawFormattedText(p.ptb.w,'Neutral',Xres/2-40,Yres/2.5,Red);
@@ -396,9 +396,9 @@ blockStart = GetSecs;
 for trial = 1:11
     
     % draw question
-    DrawFormattedText(p.ptb.w,'Please indicate how you are feeling right now about \n the cognitive task you are about to begin','center',Yres/8,White);
+    DrawFormattedText(p.ptb.w,'Please indicate how you are feeling right now about \n the cognitive task you are about to begin','center',Yres/8,White,90,[],[],1.25);
     
-    DrawFormattedText(p.ptb.w,question{trial},'center',Yres/4,Yellow);
+    DrawFormattedText(p.ptb.w,question{trial},'center',Yres/4,Yellow,90,[],[],1.25);
     
     DrawFormattedText(p.ptb.w,'Strongly disagree',Xres/2-380,Yres/2.5,Red);
     DrawFormattedText(p.ptb.w,'Neutral',Xres/2-40,Yres/2.5,Red);
@@ -492,6 +492,7 @@ for trial = 1:11
     fprintf(dataFile,'%s ,%s,%f,\n',p.subID,question{trial},bpos)
     trial = trial+1;
 end
-fclose('all'); 
+ListenChar(0);
+fclose('all');
 sca;
 end

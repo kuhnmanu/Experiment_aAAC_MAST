@@ -22,7 +22,7 @@ end
 if ~exist('comment', 'var')
     comment = '';
 end
-
+ListenChar(2);
 %%%% Preparations
 [~, hostname] = system('hostname');
 v.hostname                     = deblank(hostname);
@@ -42,8 +42,8 @@ addpath([pwd filesep 'addResources']);
 % Apearances
 v.scala.colors.bgColor      = [50 50 50];
 v.scala.colors.scalacolor   = [255 255 255];
-v.scala.linelength          = 15;
-v.scala.scalalength         = 0.64;
+v.scala.linelength          = 20;
+v.scala.scalalength         = 2/3;
 v.scala.startposition       = 'center';
 v.scala.stepsize            = 3;
 v.scala.displayposition     = 0;
@@ -77,12 +77,15 @@ Screen('Preference', 'SuppressAllWarnings',1);
 Screen('Preference', 'SkipSyncTests', 1);
 Screen('Preference', 'VisualDebuglevel', 0);
 FontName = 'Arial';
+FontLg = 32;
+screenNumber = 2;
 % Creating screen etc.
-[v.ptb.w, rect] = Screen('OpenWindow', 1, v.scala.colors.bgColor);
+[v.ptb.w, rect] = Screen('OpenWindow', screenNumber, v.scala.colors.bgColor);
 Screen('TextStyle', v.ptb.w, 1);                                   % Make Text Bold
 Screen('BlendFunction', v.ptb.w, GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 Screen('Flip',v.ptb.w);                                            % Make the bg
 Screen('TextFont',v.ptb.w,FontName);
+Screen('TextSize',v.ptb.w,FontLg);
 
 questions = {{'How do you feel at this moment?', 'Happy', 'Sad'},...
     {'How do you feel at this moment?', 'Tense', 'Relaxed'},...
@@ -127,4 +130,6 @@ end
 %%%%%%%%%% SAVE ANSWERS INTO STRUCT AND FILE %%%%%%%%%%%%%%
 save(v.path.save ,'v');
 % Close window
+ListenChar(0);
 Screen('CloseAll')
+

@@ -186,6 +186,9 @@ else
 end
 globalRect          = Screen('Rect', screenNum);
 
+%% My modification because screen is on screen 2
+globalRect          = rect;
+
 %% Coordinates of scale lines and text bounds
 if strcmp(startPosition, 'right')
     x = globalRect(3)*scalaLength;
@@ -255,13 +258,13 @@ while answer == 0
     % Drawing the anchors of the scale as text
     if length(anchors) == 2
         % Only left and right anchors
-        DrawFormattedText(screenPointer, anchors{1}, leftTick(1, 1) - textBounds(1, 3)/2,  rect(4)*scalaPosition+40, [],[],[],[],[],[],[]); % Left point
-        DrawFormattedText(screenPointer, anchors{2}, rightTick(1, 1) - textBounds(2, 3)/2,  rect(4)*scalaPosition+40, [],[],[],[],[],[],[]); % Right point
+        DrawFormattedText(screenPointer, anchors{1}, leftTick(1, 1) - textBounds(1, 3)/2,  rect(4)*scalaPosition+75, [],[],[],[],[],[],[]); % Left point
+        DrawFormattedText(screenPointer, anchors{2}, rightTick(1, 1) - textBounds(2, 3)/2,  rect(4)*scalaPosition+75, [],[],[],[],[],[],[]); % Right point
     else 
         % Left, middle and right anchors
-        DrawFormattedText(screenPointer, anchors{1}, leftTick(1, 1) - textBounds(1, 3)/2,  rect(4)*scalaPosition+40, [],[],[],[],[],[],[]); % Left point
-        DrawFormattedText(screenPointer, anchors{2}, 'center',  rect(4)*scalaPosition+40, [],[],[],[],[],[],[]); % Middle point
-        DrawFormattedText(screenPointer, anchors{3}, rightTick(1, 1) - textBounds(2, 3)/2,  rect(4)*scalaPosition+40, [],[],[],[],[],[],[]); % Right point
+        DrawFormattedText(screenPointer, anchors{1}, leftTick(1, 1) - textBounds(1, 3)/2,  rect(4)*scalaPosition+75, [],[],[],[],[],[],[]); % Left point
+        DrawFormattedText(screenPointer, anchors{2}, 'center',  rect(4)*scalaPosition+75, [],[],[],[],[],[],[]); % Middle point
+        DrawFormattedText(screenPointer, anchors{3}, rightTick(1, 1) - textBounds(2, 3)/2,  rect(4)*scalaPosition+75, [],[],[],[],[],[],[]); % Right point
     end
     
     % Drawing the scale
