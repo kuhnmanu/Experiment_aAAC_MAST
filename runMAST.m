@@ -23,12 +23,8 @@ p.stim.bg                               = [50 50 50];
 ListenChar(2);
 %%%%%%%%%%%%%%%%%%%%%%%%%%% Default parameters
 Screen('Preference', 'SkipSyncTests', 1);
-%Screen('Preference', 'DefaultFontSize', p.text.fontsize);
-%Screen('Preference', 'DefaultFontName', p.text.fontname);
 Screen('Preference', 'TextAntiAliasing',2);                        % Enable textantialiasing high quality
 Screen('Preference', 'VisualDebuglevel', 0);
-%Screen('Preference', 'SyncTestSettings' ,0.001 ,50, 0.1, 5);
-%Screen('Preference', 'SuppressAllWarnings', 0);
 HideCursor(p.ptb.screenNumber);                                % Hide the cursor
 %%%%%%%%%%%%%%%%%%%%%%%%%%% Open a graphics window using PTB
 [p.ptb.w, ScrRect]                    = Screen('OpenWindow', p.ptb.screenNumber,p.stim.bg);
