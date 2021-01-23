@@ -168,7 +168,7 @@ blockStart = GetSecs;
 for trial = 1:size(question,2)
     startTime = GetSecs;
     % draw question
-    DrawFormattedText(pn.ptb.w,'This scale consists of a number of words that describe different feelings and emotions. Read each statement and then respond using the scale below to indicate how you feel RIGHT NOW AT THIS MOMENT.','center',Yres/7,White, 55,[],[],1.25);
+    DrawFormattedText(pn.ptb.w,'This scale consists of a number of words that describe different feelings and emotions. Read each statement and then respond using the scale below to indicate how you FEEL RIGHT NOW AT THIS MOMENT.','center',Yres/7,White, 55,[],[],1.25);
 
     DrawFormattedText(pn.ptb.w,question{trial},'center',Yres/2.75,Yellow);
     
@@ -247,7 +247,7 @@ for trial = 1:size(question,2)
             Screen('FrameRect',pn.ptb.w,Red,Rbox,2);
         end
         
-        DrawFormattedText(pn.ptb.w,'This scale consists of a number of words that describe different feelings and emotions. Read each statement and then respond using the scale below to indicate how you feel RIGHT NOW AT THIS MOMENT.','center',Yres/7,White, 55,[],[],1.25);
+        DrawFormattedText(pn.ptb.w,'This scale consists of a number of words that describe different feelings and emotions. Read each statement and then respond using the scale below to indicate how you FEEL RIGHT NOW AT THIS MOMENT.','center',Yres/7,White, 55,[],[],1.25);
         
         DrawFormattedText(pn.ptb.w,question{trial},'center',Yres/2.75,Yellow);
         
