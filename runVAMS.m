@@ -92,6 +92,30 @@ questions = {{'How do you feel at this moment?', 'Happy', 'Sad'},...
     {'How do you feel at this moment?', 'Friendly', 'Hostile'}};
 v.totalQuestions = size(questions,2);
 
+
+% set datafile name and check for existing file
+fileName = fullfile(v.path.subject,['VAMS_' v.subID  '_' num2str(v.vamsNumber) '_' v.timestamp '.csv']);
+dataFile = fopen(fileName, 'a');
+
+% print header
+fprintf(dataFile,'*********************************************\n');
+fprintf(dataFile,'* Visual Analog Mood Scale\n');
+fprintf(dataFile,['* Date/Time: ' datestr(now, 0) '\n']);
+fprintf(dataFile,['* Subject Number: ' v.subID '\n']);
+fprintf(dataFile,'*********************************************\n\n');
+
+% print column labels
+fprintf(dataFile,['subject,'... %subject number
+    'question,'...               % TCQ question
+    'response,'...             % response
+    'reactionTimeInMs,'...             % response
+    'answered,'...             % response
+    '\n']);
+
+
+
+
+
 for q = 1:size(questions,2)
     
     currQ = questions{q};
@@ -122,11 +146,12 @@ for q = 1:size(questions,2)
     v.log.(logFieldName).reactionTimeInMs = RT;
     v.log.(logFieldName).answeredYesNo = answer;
     
+    fprintf(dataFile,'%s ,%s,%f,%f,%f\n',v.subID,question,position, RT, answer);
+    
+    
 end
 
-
-%%% MAKE SPREADSHEET AT SOME POINT!
-
+fclose('all');
 %%%%%%%%%% SAVE ANSWERS INTO STRUCT AND FILE %%%%%%%%%%%%%%
 save(v.path.save ,'v');
 % Close window
