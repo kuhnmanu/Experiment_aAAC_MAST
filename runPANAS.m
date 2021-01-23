@@ -67,10 +67,6 @@ Screen('BlendFunction', pn.ptb.w, GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 Screen('Flip',pn.ptb.w);                                            % Make the bg
 Screen('TextFont',pn.ptb.w,FontName);
 
-questions = {{'How do you feel at this moment?', 'Happy', 'Sad'},...
-    {'How do you feel at this moment?', 'Tense', 'Relaxed'},...
-    {'How do you feel at this moment?', 'Friendly', 'Hostile'}};
-pn.totalQuestions = size(questions,2);
 
 % screen setup
 Black = [0 0 0];
@@ -81,7 +77,7 @@ FontName = 'Arial';
 FontLg = 28;
 Xres = ScrRect(3);
 Yres = ScrRect(4);
-%Dres = sqrt(Xres^2+Yres^2)/1500;
+%Dres = sqrt(Xres^2+Yres^2)/1750;
 Screen('FillRect',pn.ptb.w, pn.colors.bgColor);
 Screen('TextFont',pn.ptb.w,FontName);
 Screen('TextSize',pn.ptb.w,FontLg);
@@ -137,6 +133,7 @@ question{18} = 'Jittery';
 question{19} = 'Active';
 question{20} = 'Afraid';
 
+pn.totalQuestions = size(question,2);
 
 %% trial loop
 % makes sure the subject is ready
@@ -147,13 +144,13 @@ WaitSecs(1);
 
 % generates digit rectangle
 reccen = [Xres/2 Yres/3];
-digrec = [Xres/2-300 Yres/2; ...
-    Xres/2-150 Yres/2; ...
+digrec = [Xres/2-350 Yres/2; ...
+    Xres/2-175 Yres/2; ...
     
     Xres/2 Yres/2; ...
     
-    Xres/2+150 Yres/2; ...
-    Xres/2+300 Yres/2;];
+    Xres/2+175 Yres/2; ...
+    Xres/2+350 Yres/2;];
 digs = [1 2 3 4 5];
 
 %Scale headers
@@ -175,14 +172,14 @@ for trial = 1:size(question,2)
 
     DrawFormattedText(pn.ptb.w,question{trial},'center',Yres/2.75,Yellow);
     
-    DrawFormattedText_mod(pn.ptb.w,sprintf('Very slightly'),'center',Yres/1.8, Red, -300);
-    DrawFormattedText_mod(pn.ptb.w,sprintf('or not at'),'center',Yres/1.8+(1*FontLg),Red, -300);
-    DrawFormattedText_mod(pn.ptb.w,sprintf('all'),'center',Yres/1.8+(2*FontLg),Red, -300);
-    DrawFormattedText_mod(pn.ptb.w,sprintf('A little'),'center',Yres/1.8,Red, -150);
+    DrawFormattedText_mod(pn.ptb.w,sprintf('Very slightly'),'center',Yres/1.8, Red, -350);
+    DrawFormattedText_mod(pn.ptb.w,sprintf('or not at all'),'center',Yres/1.8+(1.25*FontLg),Red, -350);
+    %DrawFormattedText_mod(pn.ptb.w,sprintf(''),'center',Yres/1.8+(2*FontLg),Red, -350);
+    DrawFormattedText_mod(pn.ptb.w,sprintf('A little'),'center',Yres/1.8,Red, -175);
     DrawFormattedText_mod(pn.ptb.w,sprintf('Moderately'),'center',Yres/1.8,Red, 0);
-    DrawFormattedText_mod(pn.ptb.w,sprintf('Quite a'),'center',Yres/1.8,Red, 150);
-    DrawFormattedText_mod(pn.ptb.w,sprintf('bit'),'center',Yres/1.8+(1*FontLg),Red, 150);
-    DrawFormattedText_mod(pn.ptb.w,sprintf('Extremely'),'center',Yres/1.8,Red, 300);
+    DrawFormattedText_mod(pn.ptb.w,sprintf('Quite'),'center',Yres/1.8,Red, 175);
+    DrawFormattedText_mod(pn.ptb.w,sprintf('a bit'),'center',Yres/1.8+(1.25*FontLg),Red, 175);
+    DrawFormattedText_mod(pn.ptb.w,sprintf('Extremely'),'center',Yres/1.8,Red, 350);
     
     
     
@@ -250,22 +247,18 @@ for trial = 1:size(question,2)
             Screen('FrameRect',pn.ptb.w,Red,Rbox,2);
         end
         
-        %DrawFormattedText(pn.ptb.w,'This scale consists of a number of words that describe different feelings and emotions.','center',Yres/7,White,90);
-        %DrawFormattedText(pn.ptb.w,'Read each statement and then respond using the scale below to indicate','center',Yres/7+(1.5*FontLg),White,90);
-        %DrawFormattedText(pn.ptb.w,'how you FEEL RIGHT NOW AT THIS MOMENT.','center',Yres/7+(3*FontLg),White,90);
-        %DrawFormattedText(pn.ptb.w,'This scale consists of a number of words that describe different feelings and emotions. Read each statement and then respond using the scale below to indicate how you FEEL RIGHT NOW AT THIS MOMENT.','center',Yres/7,White, 40,[],[], 1.25);
         DrawFormattedText(pn.ptb.w,'This scale consists of a number of words that describe different feelings and emotions. Read each statement and then respond using the scale below to indicate how you feel RIGHT NOW AT THIS MOMENT.','center',Yres/7,White, 55,[],[],1.25);
         
         DrawFormattedText(pn.ptb.w,question{trial},'center',Yres/2.75,Yellow);
         
-        DrawFormattedText_mod(pn.ptb.w,sprintf('Very slightly'),'center',Yres/1.8, Red, -300);
-        DrawFormattedText_mod(pn.ptb.w,sprintf('or not at'),'center',Yres/1.8+(1*FontLg),Red, -300);
-        DrawFormattedText_mod(pn.ptb.w,sprintf('all'),'center',Yres/1.8+(2*FontLg),Red, -300);
-        DrawFormattedText_mod(pn.ptb.w,sprintf('A little'),'center',Yres/1.8,Red, -150);
+        DrawFormattedText_mod(pn.ptb.w,sprintf('Very slightly'),'center',Yres/1.8, Red, -350);
+        DrawFormattedText_mod(pn.ptb.w,sprintf('or not at all'),'center',Yres/1.8+(1.25*FontLg),Red, -350);
+        %DrawFormattedText_mod(pn.ptb.w,sprintf('all'),'center',Yres/1.8+(2*FontLg),Red, -350);
+        DrawFormattedText_mod(pn.ptb.w,sprintf('A little'),'center',Yres/1.8,Red, -175);
         DrawFormattedText_mod(pn.ptb.w,sprintf('Moderately'),'center',Yres/1.8,Red, 0);
-        DrawFormattedText_mod(pn.ptb.w,sprintf('Quite a'),'center',Yres/1.8,Red, 150);
-        DrawFormattedText_mod(pn.ptb.w,sprintf('bit'),'center',Yres/1.8+(1*FontLg),Red, 150);
-        DrawFormattedText_mod(pn.ptb.w,sprintf('Extremely'),'center',Yres/1.8,Red, 300);
+        DrawFormattedText_mod(pn.ptb.w,sprintf('Quite'),'center',Yres/1.8,Red, 175);
+        DrawFormattedText_mod(pn.ptb.w,sprintf('a bit'),'center',Yres/1.8+(1.25*FontLg),Red, 175);
+        DrawFormattedText_mod(pn.ptb.w,sprintf('Extremely'),'center',Yres/1.8,Red, 350);
         
         
         Screen('Flip',pn.ptb.w);
@@ -280,12 +273,12 @@ for trial = 1:size(question,2)
     %response = bpos;
     
     % writes output to file
-    fprintf(dataFile,'%s ,%s,%f,%f\n',pn.subID,question{trial},bpos, responseTime)
+    fprintf(dataFile,'%s ,%s,%f,%f\n',pn.subID,question{trial},bpos, responseTime);
     trial = trial+1;
 end
 
 fclose('all');
-
+save(pn.path.save ,'pn');
 %MAST trials
 DrawFormattedText(pn.ptb.w,'Wait for experimenter.','center','center',White);
 Screen('Flip',pn.ptb.w);
