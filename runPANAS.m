@@ -1,11 +1,26 @@
-% sets directories
-HomeDir = pwd;
-DataDir = 'logs';
+function runPANAS(subject, panasNumber, comment)
+%Preliminary stuff
+% check for Opengl compatibility, abort otherwise:
+AssertOpenGL;
 
-subject = '1';
-panasNumber =1;
-comment = '';
+%%% Get input
 
+if nargin < 2
+    %%%%%%%%%%%%%% GET POPUP WINDOW INPUT HERE %%%%%%%%%%%%%%%%
+    response = inputdlg({'ADMS_aACC ID#:', 'PANAS#:' 'Comment:'},...
+        'Please enter information', [1 75]);
+    subject                 = str2double(response{1});
+    panasNumber              = str2double(response{2});
+    comment                 = response{3};
+    
+    if isempty(subject) || isempty(panasNumber)
+        error('Please specify details (subID and PANAS#).');
+    end
+end
+
+if ~exist('comment', 'var')
+    comment = '';
+end
 ListenChar(2);
 
 screenNumber = 2;
@@ -19,7 +34,7 @@ pn.path.experiment              = [pwd filesep];
 pn.subID                        = sprintf('ADMS_aACC_%03d', subject);
 pn.panasNumber                   = panasNumber;
 pn.timestamp                    = datestr(now,30);
-pn.path.subject                 = [pn.path.experiment 'logs' filesep pn.subID filesep];
+pn.path.subject                 = [pn.path.experiment 'logs' filesep pn.subID filesep 'PANAS' filesep];
 if ~exist(pn.path.subject,'dir'); mkdir(pn.path.subject); end
 pn.path.save                    = [pn.path.subject filesep pn.subID '_PANAS_' num2str(pn.panasNumber) '_' pn.timestamp];
 pn.comment                      = comment;
@@ -72,19 +87,13 @@ Screen('TextFont',pn.ptb.w,FontName);
 Screen('TextSize',pn.ptb.w,FontLg);
 
 
-
-% set subject directory
-pn.timestamp                    = datestr(now,30);
-pn.subID = sprintf('ADMS_aACC_%03d',str2double(subject));
-mkdir(fullfile(HomeDir,DataDir,pn.subID  ));
-
 % set datafile name and check for existing file
-fileName = fullfile(HomeDir,DataDir,pn.subID,['PANAS_' pn.subID '_' pn.timestamp '.csv']);
+fileName = fullfile(pn.path.subject,[pn.subID  '_PANAS_' num2str(pn.panasNumber) '_' pn.timestamp '.csv']);
 dataFile = fopen(fileName, 'a');
 
 % print header
 fprintf(dataFile,'*********************************************\n');
-fprintf(dataFile,['* PANAS Questionnaire ' num2str(panasNumber) '\n']);
+fprintf(dataFile,['* PANAS Questionnaire ' num2str(pn.panasNumber) '\n']);
 fprintf(dataFile,['* Date/Time: ' datestr(now, 0) '\n']);
 fprintf(dataFile,['* Subject Number: ' pn.subID '\n']);
 fprintf(dataFile,'*********************************************\n\n');
@@ -93,6 +102,7 @@ fprintf(dataFile,'*********************************************\n\n');
 fprintf(dataFile,['subject,'... %subject number
     'question,'...               % TCQ question
     'response,'...             % response
+    'responseTimeInS,'...             % response
     '\n']);
 
 % button setup
@@ -143,7 +153,7 @@ digrec = [Xres/2-300 Yres/2; ...
     Xres/2 Yres/2; ...
     
     Xres/2+150 Yres/2; ...
-    Xres/2+300 Yres/2;]
+    Xres/2+300 Yres/2;];
 digs = [1 2 3 4 5];
 
 %Scale headers
@@ -157,9 +167,9 @@ blockStart = GetSecs;
 
 
 
-% loops through 11 question trials;
-for trial = 1:11
-    
+% loops through question trials;
+for trial = 1:size(question,2)
+    startTime = GetSecs;
     % draw question
     DrawFormattedText(pn.ptb.w,'This scale consists of a number of words that describe different feelings and emotions. Read each statement and then respond using the scale below to indicate how you feel RIGHT NOW AT THIS MOMENT.','center',Yres/7,White, 55,[],[],1.25);
 
@@ -262,7 +272,7 @@ for trial = 1:11
         % Pauses to avoid moving box too quickly
         WaitSecs(.1);
         moveCycles = moveCycles+1;
-        
+        responseTime = GetSecs() - startTime;
     end
     
     % creates output variables
@@ -270,7 +280,7 @@ for trial = 1:11
     %response = bpos;
     
     % writes output to file
-    fprintf(dataFile,'%s ,%s,%f,\n',pn.subID,question{trial},bpos)
+    fprintf(dataFile,'%s ,%s,%f,%f\n',pn.subID,question{trial},bpos, responseTime)
     trial = trial+1;
 end
 

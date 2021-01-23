@@ -33,7 +33,7 @@ v.path.experiment              = [pwd filesep];
 v.subID                        = sprintf('ADMS_aACC_%03d', subject);
 v.vamsNumber                   = vamsNumber;
 v.timestamp                    = datestr(now,30);
-v.path.subject                 = [v.path.experiment 'logs' filesep v.subID filesep];
+v.path.subject                 = [v.path.experiment 'logs' filesep v.subID filesep 'VAMS' filesep];
 if ~exist(v.path.subject,'dir'); mkdir(v.path.subject); end
 v.path.save                    = [v.path.subject filesep v.subID '_VAMS_' num2str(v.vamsNumber) '_' v.timestamp];
 v.comment                      = comment;
@@ -43,7 +43,7 @@ addpath([pwd filesep 'addResources']);
 v.scala.colors.bgColor      = [50 50 50];
 v.scala.colors.scalacolor   = [255 255 255];
 v.scala.linelength          = 20;
-v.scala.scalalength         = 2/3;
+v.scala.scalalength         = 0.64;
 v.scala.startposition       = 'center';
 v.scala.stepsize            = 3;
 v.scala.displayposition     = 0;
@@ -94,7 +94,7 @@ v.totalQuestions = size(questions,2);
 
 
 % set datafile name and check for existing file
-fileName = fullfile(v.path.subject,['VAMS_' v.subID  '_' num2str(v.vamsNumber) '_' v.timestamp '.csv']);
+fileName = fullfile(v.path.subject,[v.subID  '_VAMS_' num2str(v.vamsNumber) '_' v.timestamp '.csv']);
 dataFile = fopen(fileName, 'a');
 
 % print header
@@ -146,7 +146,7 @@ for q = 1:size(questions,2)
     v.log.(logFieldName).reactionTimeInMs = RT;
     v.log.(logFieldName).answeredYesNo = answer;
     
-    fprintf(dataFile,'%s ,%s,%f,%f,%f\n',v.subID,question,position, RT, answer);
+    fprintf(dataFile,'%s ,%s,%f,%f,%f\n',v.subID,question,round(position), RT, answer);
     
     
 end
