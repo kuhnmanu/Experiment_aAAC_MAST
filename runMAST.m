@@ -67,7 +67,7 @@ DrawFormattedText(p.ptb.w,'When the computer signals that it is time to \n take 
 Screen('Flip',p.ptb.w);
 WaitSecs(1);
 KbWait(-3);
-DrawFormattedText(p.ptb.w,'You can rest your hand on the towel during the \n arithmetic test. \n You must continue with the arithhmetic test until \n the computer signals the start of the next \n hand immersion trial.','center','center',White,90,[],[],1.25);
+DrawFormattedText(p.ptb.w,'You can rest your hand on the towel during the \n arithmetic test. \n You must continue with the arithmetic test until \n the computer signals the start of the next \n hand immersion trial.','center','center',White,90,[],[],1.25);
 Screen('Flip',p.ptb.w);
 WaitSecs(1);
 KbWait(-3);
@@ -465,7 +465,7 @@ for trial = 1:11
         else
             Screen('FrameRect',p.ptb.w,Red,Rbox,2);
         end
-        DrawFormattedText(p.ptb.w,'Please indicate how you are feeling right now about \n the cognitive task you are about to begin','center',Yres/8,White);
+        DrawFormattedText(p.ptb.w,'Please indicate how you are feeling right now about \n the cognitive task you are about to begin','center',Yres/8,White,90,[],[],1.25);
         
         DrawFormattedText(p.ptb.w,question{trial},'center',Yres/4,Yellow);
         
