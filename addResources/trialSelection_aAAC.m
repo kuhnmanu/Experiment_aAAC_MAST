@@ -40,6 +40,12 @@ end
 if (isfield(p.TrialRecord,'AversionGridSteps'))
     AversionGridSteps = p.TrialRecord.AversionGridSteps;
 end
+% [ZY-edit] Addition
+if (isfield(p.TrialRecord,'minorGridSize'))
+    minorGridSize = p.TrialRecord.minorGridSize;
+else
+    minorGridSize = 1;
+end
 AversionRange = [AversionLow AversionHigh];   % range of possible aversion risk
 RewardRange = [RewardLow RewardHigh];    % range of possible rewards
 CLOSEBOUND_TR = 1; VARIBOUND_TR = 2; RAND_TR = 3; % Numeric values for conditions
@@ -56,8 +62,11 @@ if (p.TrialRecord.Initialized == 0)
     p.TrialRecord.Initialized = 1;
 end
 
-posAverValues =AversionRange(1):AversionRange(2);    % possible values
-posRewValues = RewardRange(1):RewardRange(2);
+% [ZY-edit] 
+% posAverValues =AversionRange(1):AversionRange(2);    % possible values
+% posRewValues = RewardRange(1):RewardRange(2);
+posAverValues   =   AversionRange(1):minorGridSize: AversionRange(2);    % possible values
+posRewValues    =   RewardRange(1)  :minorGridSize: RewardRange(2);
 
 % ----------------------------------------------------------
 % DO THE TRIAL SELECTION
@@ -102,8 +111,12 @@ p.TrialRecord.AverOffer = [p.TrialRecord.AverOffer averOut];
         
         boundary = p.TrialRecord.boundary(1,:,end);   % TODO CHECK IF BOUNDARY RECORD FORMAT IS SAME HERE
         
-        px = repmat(RewardRange(1):RewardRange(2),diff(AversionRange)+1,1);
-        py = repmat([AversionRange(1):AversionRange(2)]',1,diff(RewardRange)+1);
+        % [ZY-edit] 
+        %px = repmat(RewardRange(1):RewardRange(2),diff(AversionRange)+1,1);
+        %py = repmat([AversionRange(1):AversionRange(2)]',1,diff(RewardRange)+1);
+        pxx = posRewValues;   %RewardRange(1)    :minorGridSize    :RewardRange(2);
+        pyy = posAverValues;  %AversionRange(1)  :minorGridSize  :AversionRange(2);
+        [px,py] = meshgrid(pxx,pyy);
         
         for bI = 1:size(boundary,1)
             bo = 1/boundary(bI,1) * px + py;   % slope of line orthogonal to boundary at each point
@@ -126,10 +139,13 @@ p.TrialRecord.AverOffer = [p.TrialRecord.AverOffer averOut];
                     rOut = rewOut;
                     aOut = averOut;
                 else % choose using the boundary
-                    xweight = -1000:1000;
-                    weight = normpdf(xweight,0,boundaryBlur); % gaussian weighting from boundary
-                    
-                    A = weight(round(d) + round(length(xweight)/2));    % matrix A (of possible rew/aver combos) with weights
+                    % [ZY-edit] >>>
+                    %xweight = -1000:1000;
+                    %weight = normpdf(xweight,0,boundaryBlur); % gaussian weighting from boundary
+                    %A = weight(round(d) + round(length(xweight)/2));    % matrix A (of possible rew/aver combos) with weights
+                    weight=normpdf(reshape(d,1,[]),0,boundaryBlur);
+                    A = reshape(weight,size(d,1),[]);
+                    % [ZY-edit] <<<
                     cum = cumsum(reshape(A,1,[]));  %add up all the weights
                     
                     for trI = 1:length(numTrials)
@@ -160,10 +176,13 @@ p.TrialRecord.AverOffer = [p.TrialRecord.AverOffer averOut];
                     end
                 end
                 d = min(d,[],3);    % weighting according to the shortest distance to either boundarys 
-                xweight = -1000:1000;
-                weight = normpdf(xweight,0,boundaryBlur); % gaussian weighting from boundary
-                
-                A = weight(round(d) + round(length(xweight)/2));    % matrix A (of possible rew/aver combos) with weights
+                % [ZY-edit] >>>
+                %xweight = -1000:1000;
+                %weight = normpdf(xweight,0,boundaryBlur); % gaussian weighting from boundary
+                %A = weight(round(d) + round(length(xweight)/2));    % matrix A (of possible rew/aver combos) with weights
+                % [ZY-edit] <<<
+                weight=normpdf(reshape(d,1,[]),0,boundaryBlur);
+                A = reshape(weight,size(d,1),[]);
                 cum = cumsum(reshape(A,1,[]));  %add up all the weights
                 
                 for trI = 1:length(numTrials)
