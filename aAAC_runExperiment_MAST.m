@@ -39,7 +39,7 @@ invertScreenRuns    = 0;                                                   % Inv
 mr_joystick         = 1;                                                   % When MR joystick is used, a different acceleration factor is set.
 
 if ~exist('runNumber','var')
-    runNumber       = '';
+    runNumber       = 0;
 end
 totalRuns           = 3;
 
