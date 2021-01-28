@@ -38,7 +38,7 @@ White = [255 255 255];
 Red = [255 0 0];
 Yellow = [255 255 0];
 FontName = 'Arial';
-FontLg = 28;
+FontLg = 32;
 Xres = ScrRect(3);
 Yres = ScrRect(4);
 %Dres = sqrt(Xres^2+Yres^2)/1500;
@@ -149,6 +149,7 @@ question{11} = 'I think the cognitive task represents \n a threat to me';
 % makes sure the subject is ready
 DrawFormattedText(p.ptb.w,'Press any button when ready to begin questionnaire.','center','center',White);
 Screen('Flip',p.ptb.w);
+WaitSecs(1);
 KbWait(-3);
 WaitSecs(1);
 
@@ -196,6 +197,7 @@ for trial = 1:11
     Rbox = Rbox + [10 -10 10 -10]; % for new PC
     Screen('FrameRect',p.ptb.w,Red,Rbox,2);
     Screen('Flip',p.ptb.w);
+    WaitSecs(1);
     % trial start (from subject's POV)
     confirm = false;
     bpos = 1;
@@ -272,7 +274,7 @@ for trial = 1:11
     trial = trial+1;
 end
 
-fclose('all'); 
+fclose('all');
 
 %MAST trials
 DrawFormattedText(p.ptb.w,'Wait for experimenter.','center','center',White);
@@ -281,6 +283,18 @@ Screen('Flip',p.ptb.w);
 KbWait(-3);                 %%% Put space press here!
 %RestrictKeysForKbCheck([]);
 
+
+
+while 1
+    [keyIsDown, ~, keyCode] = KbCheck(-1);
+    if keyIsDown
+        if find(keyCode) == p.keys.space
+            break;
+        end
+    end
+end
+
+ 
 DrawFormattedText(p.ptb.w,'Put your hand in the water','center','center',White);
 Screen('Flip',p.ptb.w);
 WaitSecs(90);
@@ -304,19 +318,16 @@ WaitSecs(45);
 DrawFormattedText(p.ptb.w,'Take your hand out of the water and count \n backwards from 2032 in steps of 17','center','center',White);
 Screen('Flip',p.ptb.w);
 WaitSecs(90);
-%WaitSecs(5);
 DrawFormattedText(p.ptb.w,'Put your hand in the water','center','center',White);
 Screen('Flip',p.ptb.w);
 WaitSecs(90);
-%WaitSecs(5);
 DrawFormattedText(p.ptb.w,'Take your hand out of the water and count \n backwards from 2091 in steps of 17','center','center',White);
 Screen('Flip',p.ptb.w);
 WaitSecs(60);
-%WaitSecs(5);
 DrawFormattedText(p.ptb.w,'Put your hand in the water','center','center',White);
 Screen('Flip',p.ptb.w);
 WaitSecs(45);
-%WaitSecs(5);
+
 
 
 
@@ -363,6 +374,7 @@ question{11} = 'I thought the cognitive task represented\n  a threat to me';
 % makes sure the subject is ready
 DrawFormattedText(p.ptb.w,'Press any button when ready to begin questionnaire.','center','center',White);
 Screen('Flip',p.ptb.w);
+WaitSecs(1);
 KbWait(-3);
 WaitSecs(1);
 
@@ -412,7 +424,7 @@ for trial = 1:11
     Rbox = Rbox + [10 -10 10 -10]; % for new PC
     Screen('FrameRect',p.ptb.w,Red,Rbox,2);
     Screen('Flip',p.ptb.w);
-    
+    WaitSecs(1);
     % trial start (from subject's POV)
     confirm = false;
     bpos = 1;
@@ -467,7 +479,7 @@ for trial = 1:11
         end
         DrawFormattedText(p.ptb.w,'Please indicate how you are feeling right now about \n the cognitive task you are about to begin','center',Yres/8,White,90,[],[],1.25);
         
-        DrawFormattedText(p.ptb.w,question{trial},'center',Yres/4,Yellow);
+        DrawFormattedText(p.ptb.w,question{trial},'center',Yres/4,Yellow,90,[],[],1.25);
         
         DrawFormattedText(p.ptb.w,'Strongly disagree',Xres/2-380,Yres/2.5,Red);
         DrawFormattedText(p.ptb.w,'Neutral',Xres/2-40,Yres/2.5,Red);
