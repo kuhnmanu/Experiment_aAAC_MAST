@@ -1,4 +1,4 @@
-function runPANAS(subject, panasNumber, comment)
+function runPANAS(subject, panasNumber)
 %Preliminary stuff
 % check for Opengl compatibility, abort otherwise:
 AssertOpenGL;
@@ -7,20 +7,17 @@ AssertOpenGL;
 
 if nargin < 2
     %%%%%%%%%%%%%% GET POPUP WINDOW INPUT HERE %%%%%%%%%%%%%%%%
-    response = inputdlg({'ADMS_aACC ID#:', 'PANAS#:' 'Comment:'},...
+    response = inputdlg({'ADMS_aACC ID#:', 'PANAS#:'},...
         'Please enter information', [1 75]);
     subject                 = str2double(response{1});
     panasNumber              = str2double(response{2});
-    comment                 = response{3};
-    
+   
     if isempty(subject) || isempty(panasNumber)
         error('Please specify details (subID and PANAS#).');
     end
 end
 
-if ~exist('comment', 'var')
-    comment = '';
-end
+
 ListenChar(2);
 
 screenNumber = 2;
@@ -37,7 +34,6 @@ pn.timestamp                    = datestr(now,30);
 pn.path.subject                 = [pn.path.experiment 'logs' filesep pn.subID filesep 'PANAS' filesep];
 if ~exist(pn.path.subject,'dir'); mkdir(pn.path.subject); end
 pn.path.save                    = [pn.path.subject filesep pn.subID '_PANAS_' num2str(pn.panasNumber) '_' pn.timestamp];
-pn.comment                      = comment;
 addpath([pwd filesep 'addResources']);
 pn.colors.bgColor = [50 50 50];
 
@@ -140,7 +136,7 @@ pn.totalQuestions = size(question,2);
 DrawFormattedText(pn.ptb.w,'Press any button when ready to begin questionnaire.','center','center',White);
 Screen('Flip',pn.ptb.w);
 KbWait(-1);
-WaitSecs(1);
+WaitSecs(0.5);
 
 % generates digit rectangle
 reccen = [Xres/2 Yres/3];
@@ -168,9 +164,9 @@ blockStart = GetSecs;
 for trial = 1:size(question,2)
     startTime = GetSecs;
     % draw question
-    DrawFormattedText(pn.ptb.w,'This scale consists of a number of words that describe different feelings and emotions. Read each statement and then respond using the scale below to indicate how you FEEL RIGHT NOW AT THIS MOMENT.','center',Yres/7,White, 55,[],[],1.25);
+    DrawFormattedText(pn.ptb.w,'This scale consists of a number of words that describe different feelings and emotions. Read each statement and then respond using the scale below to indicate how you FEEL RIGHT NOW AT THIS MOMENT.','center',Yres/4.5,White, 55,[],[],1.25);
 
-    DrawFormattedText(pn.ptb.w,question{trial},'center',Yres/2.75,Yellow);
+    DrawFormattedText(pn.ptb.w,question{trial},'center',Yres/2.4,Yellow);
     
     DrawFormattedText_mod(pn.ptb.w,sprintf('Very slightly'),'center',Yres/1.8, Red, -350);
     DrawFormattedText_mod(pn.ptb.w,sprintf('or not at all'),'center',Yres/1.8+(1.25*FontLg),Red, -350);
@@ -247,9 +243,9 @@ for trial = 1:size(question,2)
             Screen('FrameRect',pn.ptb.w,Red,Rbox,2);
         end
         
-        DrawFormattedText(pn.ptb.w,'This scale consists of a number of words that describe different feelings and emotions. Read each statement and then respond using the scale below to indicate how you FEEL RIGHT NOW AT THIS MOMENT.','center',Yres/7,White, 55,[],[],1.25);
+        DrawFormattedText(pn.ptb.w,'This scale consists of a number of words that describe different feelings and emotions. Read each statement and then respond using the scale below to indicate how you FEEL RIGHT NOW AT THIS MOMENT.','center',Yres/4.5,White, 55,[],[],1.25);
         
-        DrawFormattedText(pn.ptb.w,question{trial},'center',Yres/2.75,Yellow);
+        DrawFormattedText(pn.ptb.w,question{trial},'center',Yres/2.4,Yellow);
         
         DrawFormattedText_mod(pn.ptb.w,sprintf('Very slightly'),'center',Yres/1.8, Red, -350);
         DrawFormattedText_mod(pn.ptb.w,sprintf('or not at all'),'center',Yres/1.8+(1.25*FontLg),Red, -350);

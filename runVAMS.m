@@ -1,4 +1,4 @@
-function runVAMS(subject, vamsNumber, comment)
+function runVAMS(subject, vamsNumber)
 
 % Preliminary stuff
 % check for Opengl compatibility, abort otherwise:
@@ -8,20 +8,16 @@ AssertOpenGL;
 
 if nargin < 2
     %%%%%%%%%%%%%% GET POPUP WINDOW INPUT HERE %%%%%%%%%%%%%%%%
-    response = inputdlg({'ADMS_aACC ID#:', 'VAMS#:' 'Comment:'},...
+    response = inputdlg({'ADMS_aACC ID#:', 'VAMS#:'},...
         'aAAC Task - Please enter information', [1 75]);
     subject                 = str2double(response{1});
     vamsNumber              = str2double(response{2});
-    comment                 = response{3};
     
     if isempty(subject) || isempty(vamsNumber)
         error('Please specify details (subID and VAMS#).');
     end
 end
 
-if ~exist('comment', 'var')
-    comment = '';
-end
 ListenChar(2);
 %%%% Preparations
 [~, hostname] = system('hostname');
@@ -36,7 +32,6 @@ v.timestamp                    = datestr(now,30);
 v.path.subject                 = [v.path.experiment 'logs' filesep v.subID filesep 'VAMS' filesep];
 if ~exist(v.path.subject,'dir'); mkdir(v.path.subject); end
 v.path.save                    = [v.path.subject filesep v.subID '_VAMS_' num2str(v.vamsNumber) '_' v.timestamp];
-v.comment                      = comment;
 addpath([pwd filesep 'addResources']);
 
 % Apearances

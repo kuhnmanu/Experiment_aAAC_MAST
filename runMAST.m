@@ -1,16 +1,15 @@
 function runMAST
 %
 subject = '';
-comment = 'no comment';
 
-response = inputdlg({'ADMS_aACC ID#:', 'comment'},...
+response = inputdlg({'ADMS_aACC ID#:'},...
     'run MAST - Please enter information', [1 75],...
-    {subject,  comment});
+    {subject});
 if isempty(response)
     error(['User pressed "Cancel" for run #: ' num2str(runNumber) '. Please restart for this run.']);
 end
 subject                 = response{1};
-comment                 = response{2};
+
 KbName('UnifyKeyNames');
 p.keys.space                            = KbName('space');
 p.keys.next                             = KbName('RightArrow');
