@@ -150,7 +150,7 @@ DrawFormattedText(p.ptb.w,'Press any button when ready to begin questionnaire.',
 Screen('Flip',p.ptb.w);
 WaitSecs(1);
 KbWait(-3);
-WaitSecs(1);
+WaitSecs(0.5);
 
 % generates digit rectangle
 reccen = [Xres/2 Yres/3];
@@ -176,13 +176,13 @@ blockStart = GetSecs;
 for trial = 1:11
     
     % draw question
-    DrawFormattedText(p.ptb.w,'Please indicate how you are feeling right now about \n the cognitive task you are about to begin','center',Yres/8,White,90,[],[],1.25);
+    DrawFormattedText(p.ptb.w,'Please indicate how you are feeling right now about \n the cognitive task you are about to begin','center',Yres/5,White,90,[],[],1.25);
     
-    DrawFormattedText(p.ptb.w,question{trial},'center',Yres/4,Yellow,90,[],[],1.25);
+    DrawFormattedText(p.ptb.w,question{trial},'center',Yres/2.8,Yellow,90,[],[],1.25);
     
-    DrawFormattedText(p.ptb.w,'Strongly disagree',Xres/2-380,Yres/2.5,Red);
-    DrawFormattedText(p.ptb.w,'Neutral',Xres/2-40,Yres/2.5,Red);
-    DrawFormattedText(p.ptb.w,'Strongly agree',Xres/2+200,Yres/2.5,Red);
+    DrawFormattedText(p.ptb.w,'Strongly disagree',Xres/2-380,Yres/1.8,Red);
+    DrawFormattedText(p.ptb.w,'Neutral',Xres/2-40,Yres/1.8,Red);
+    DrawFormattedText(p.ptb.w,'Strongly agree',Xres/2+200,Yres/1.8,Red);
     
     
     % draw digit rec
@@ -196,7 +196,7 @@ for trial = 1:11
     Rbox = Rbox + [10 -10 10 -10]; % for new PC
     Screen('FrameRect',p.ptb.w,Red,Rbox,2);
     Screen('Flip',p.ptb.w);
-    WaitSecs(1);
+    WaitSecs(0.5);
     % trial start (from subject's POV)
     confirm = false;
     bpos = 1;
@@ -249,13 +249,13 @@ for trial = 1:11
         else
             Screen('FrameRect',p.ptb.w,Red,Rbox,2);
         end
-        DrawFormattedText(p.ptb.w,'Please indicate how you are feeling right now about \n the cognitive task you are about to begin','center',Yres/8,White,90,[],[],1.25);
+        DrawFormattedText(p.ptb.w,'Please indicate how you are feeling right now about \n the cognitive task you are about to begin','center',Yres/5,White,90,[],[],1.25);
         
-        DrawFormattedText(p.ptb.w,question{trial},'center',Yres/4,Yellow,90,[],[],1.25);
+        DrawFormattedText(p.ptb.w,question{trial},'center',Yres/2.8,Yellow,90,[],[],1.25);
         
-        DrawFormattedText(p.ptb.w,'Strongly disagree',Xres/2-380,Yres/2.5,Red);
-        DrawFormattedText(p.ptb.w,'Neutral',Xres/2-40,Yres/2.5,Red);
-        DrawFormattedText(p.ptb.w,'Strongly agree',Xres/2+200,Yres/2.5,Red);
+        DrawFormattedText(p.ptb.w,'Strongly disagree',Xres/2-380,Yres/1.8,Red);
+        DrawFormattedText(p.ptb.w,'Neutral',Xres/2-40,Yres/1.8,Red);
+        DrawFormattedText(p.ptb.w,'Strongly agree',Xres/2+200,Yres/1.8,Red);
         
         Screen('Flip',p.ptb.w);
         % Pauses to avoid moving box too quickly
@@ -297,23 +297,18 @@ end
 DrawFormattedText(p.ptb.w,'Put your hand in the water','center','center',White);
 Screen('Flip',p.ptb.w);
 WaitSecs(90);
-%WaitSecs(5);
 DrawFormattedText(p.ptb.w,'Take your hand out of the water and count \n backwards from 2043 in steps of 17','center','center',White);
 Screen('Flip',p.ptb.w);
-WaitSecs(90);
-%WaitSecs(5);
+WaitSecs(90);;
 DrawFormattedText(p.ptb.w,'Put your hand in the water','center','center',White);
 Screen('Flip',p.ptb.w);
 WaitSecs(60);
-%WaitSecs(5);
 DrawFormattedText(p.ptb.w,'Take your hand out of the water and count \n backwards from 2064 in steps of 17','center','center',White);
 Screen('Flip',p.ptb.w);
 WaitSecs(60);
-%WaitSecs(5);
 DrawFormattedText(p.ptb.w,'Put your hand in the water','center','center',White);
 Screen('Flip',p.ptb.w);
 WaitSecs(45);
-%WaitSecs(5);
 DrawFormattedText(p.ptb.w,'Take your hand out of the water and count \n backwards from 2032 in steps of 17','center','center',White);
 Screen('Flip',p.ptb.w);
 WaitSecs(90);
@@ -375,7 +370,7 @@ DrawFormattedText(p.ptb.w,'Press any button when ready to begin questionnaire.',
 Screen('Flip',p.ptb.w);
 WaitSecs(1);
 KbWait(-3);
-WaitSecs(1);
+WaitSecs(0.5);
 
 % generates digit rectangle
 reccen = [Xres/2 Yres/3];
@@ -403,13 +398,13 @@ blockStart = GetSecs;
 for trial = 1:11
     
     % draw question
-    DrawFormattedText(p.ptb.w,'Please indicate how you are feeling right now about \n the cognitive task you are about to begin','center',Yres/8,White,90,[],[],1.25);
+    DrawFormattedText(p.ptb.w,'Please indicate how you are feeling right now about \n the cognitive task you are about to begin','center',Yres/5,White,90,[],[],1.25);
     
-    DrawFormattedText(p.ptb.w,question{trial},'center',Yres/4,Yellow,90,[],[],1.25);
+    DrawFormattedText(p.ptb.w,question{trial},'center',Yres/2.8,Yellow,90,[],[],1.25);
     
-    DrawFormattedText(p.ptb.w,'Strongly disagree',Xres/2-380,Yres/2.5,Red);
-    DrawFormattedText(p.ptb.w,'Neutral',Xres/2-40,Yres/2.5,Red);
-    DrawFormattedText(p.ptb.w,'Strongly agree',Xres/2+200,Yres/2.5,Red);
+    DrawFormattedText(p.ptb.w,'Strongly disagree',Xres/2-380,Yres/1.8,Red);
+    DrawFormattedText(p.ptb.w,'Neutral',Xres/2-40,Yres/1.8,Red);
+    DrawFormattedText(p.ptb.w,'Strongly agree',Xres/2+200,Yres/1.8,Red);
     
     
     % draw digit rec
@@ -423,7 +418,7 @@ for trial = 1:11
     Rbox = Rbox + [10 -10 10 -10]; % for new PC
     Screen('FrameRect',p.ptb.w,Red,Rbox,2);
     Screen('Flip',p.ptb.w);
-    WaitSecs(1);
+    WaitSecs(0.5);
     % trial start (from subject's POV)
     confirm = false;
     bpos = 1;
@@ -476,13 +471,13 @@ for trial = 1:11
         else
             Screen('FrameRect',p.ptb.w,Red,Rbox,2);
         end
-        DrawFormattedText(p.ptb.w,'Please indicate how you are feeling right now about \n the cognitive task you are about to begin','center',Yres/8,White,90,[],[],1.25);
+        DrawFormattedText(p.ptb.w,'Please indicate how you are feeling right now about \n the cognitive task you are about to begin','center',Yres/5,White,90,[],[],1.25);
         
-        DrawFormattedText(p.ptb.w,question{trial},'center',Yres/4,Yellow,90,[],[],1.25);
+        DrawFormattedText(p.ptb.w,question{trial},'center',Yres/2.8,Yellow,90,[],[],1.25);
         
-        DrawFormattedText(p.ptb.w,'Strongly disagree',Xres/2-380,Yres/2.5,Red);
-        DrawFormattedText(p.ptb.w,'Neutral',Xres/2-40,Yres/2.5,Red);
-        DrawFormattedText(p.ptb.w,'Strongly agree',Xres/2+200,Yres/2.5,Red);
+        DrawFormattedText(p.ptb.w,'Strongly disagree',Xres/2-380,Yres/1.8,Red);
+        DrawFormattedText(p.ptb.w,'Neutral',Xres/2-40,Yres/1.8,Red);
+        DrawFormattedText(p.ptb.w,'Strongly agree',Xres/2+200,Yres/1.8,Red);
         
         Screen('Flip',p.ptb.w);
         % Pauses to avoid moving box too quickly
