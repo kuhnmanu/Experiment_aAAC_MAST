@@ -1,6 +1,8 @@
-function runMAST
+function runMAST(subject)
 %
+if nargin < 1
 subject = '';
+end
 
 response = inputdlg({'ADMS_aACC ID#:'},...
     'run MAST - Please enter information', [1 75],...
@@ -97,6 +99,14 @@ end
 % sets directories
 HomeDir = pwd;
 DataDir = 'logs';
+p.path.experiment = HomeDir;
+addpath(genpath([p.path.experiment 'DS8R-MATLAB_official']));      % Add Digitimer dll and functions
+addpath(genpath([p.path.experiment 'daqtoolbox']));                % Add ML NI Daq control functions
+p.niDaq = digitalio('nidaq','Dev1');
+addline(p.niDaq,0:7,0,'out');                                      % Add Line 0-7 of Port 0 for output
+putvalue(p.niDaq,0)
+p.com.lpt.MASTOnset                     = 176;
+p.com.lpt.duration                      = 0.005;
 
 % set subject directory
 p.timestamp                    = datestr(now,30);
@@ -293,36 +303,64 @@ while 1
     end
 end
 
- 
+
 DrawFormattedText(p.ptb.w,'Put your hand in the water','center','center',White);
 Screen('Flip',p.ptb.w);
+putvalue(p.niDaq,p.com.lpt.MASTOnset);
+WaitSecs(p.com.lpt.duration);
+putvalue(p.niDaq,0);
 WaitSecs(90);
 DrawFormattedText(p.ptb.w,'Take your hand out of the water and count \n backwards from 2043 in steps of 17','center','center',White);
 Screen('Flip',p.ptb.w);
-WaitSecs(90);;
+putvalue(p.niDaq,p.com.lpt.MASTOnset);
+WaitSecs(p.com.lpt.duration);
+putvalue(p.niDaq,0);
+WaitSecs(90);
 DrawFormattedText(p.ptb.w,'Put your hand in the water','center','center',White);
 Screen('Flip',p.ptb.w);
+putvalue(p.niDaq,p.com.lpt.MASTOnset);
+WaitSecs(p.com.lpt.duration);
+putvalue(p.niDaq,0);
 WaitSecs(60);
 DrawFormattedText(p.ptb.w,'Take your hand out of the water and count \n backwards from 2064 in steps of 17','center','center',White);
 Screen('Flip',p.ptb.w);
+putvalue(p.niDaq,p.com.lpt.MASTOnset);
+WaitSecs(p.com.lpt.duration);
+putvalue(p.niDaq,0);
 WaitSecs(60);
 DrawFormattedText(p.ptb.w,'Put your hand in the water','center','center',White);
 Screen('Flip',p.ptb.w);
+putvalue(p.niDaq,p.com.lpt.MASTOnset);
+WaitSecs(p.com.lpt.duration);
+putvalue(p.niDaq,0);
 WaitSecs(45);
 DrawFormattedText(p.ptb.w,'Take your hand out of the water and count \n backwards from 2032 in steps of 17','center','center',White);
 Screen('Flip',p.ptb.w);
+putvalue(p.niDaq,p.com.lpt.MASTOnset);
+WaitSecs(p.com.lpt.duration);
+putvalue(p.niDaq,0);
 WaitSecs(90);
 DrawFormattedText(p.ptb.w,'Put your hand in the water','center','center',White);
 Screen('Flip',p.ptb.w);
+putvalue(p.niDaq,p.com.lpt.MASTOnset);
+WaitSecs(p.com.lpt.duration);
+putvalue(p.niDaq,0);
 WaitSecs(90);
 DrawFormattedText(p.ptb.w,'Take your hand out of the water and count \n backwards from 2091 in steps of 17','center','center',White);
 Screen('Flip',p.ptb.w);
+putvalue(p.niDaq,p.com.lpt.MASTOnset);
+WaitSecs(p.com.lpt.duration);
+putvalue(p.niDaq,0);
 WaitSecs(60);
 DrawFormattedText(p.ptb.w,'Put your hand in the water','center','center',White);
 Screen('Flip',p.ptb.w);
+putvalue(p.niDaq,p.com.lpt.MASTOnset);
+WaitSecs(p.com.lpt.duration);
+putvalue(p.niDaq,0);
 WaitSecs(45);
-
-
+putvalue(p.niDaq,p.com.lpt.MASTOnset);
+WaitSecs(p.com.lpt.duration);
+putvalue(p.niDaq,0);
 
 
 % sets random seed

@@ -136,7 +136,7 @@ pn.totalQuestions = size(question,2);
 DrawFormattedText(pn.ptb.w,'Press any button when ready to begin questionnaire.','center','center',White);
 Screen('Flip',pn.ptb.w);
 KbWait(-1);
-WaitSecs(0.5);
+WaitSecs(0.75);
 
 % generates digit rectangle
 reccen = [Xres/2 Yres/3];
