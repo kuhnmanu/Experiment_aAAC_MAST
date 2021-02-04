@@ -8,7 +8,7 @@ AssertOpenGL;
 
 if nargin < 2
     %%%%%%%%%%%%%% GET POPUP WINDOW INPUT HERE %%%%%%%%%%%%%%%%
-    response = inputdlg({'ADMS_aACC ID#:', 'VAMS#:'},...
+    response = inputdlg({'ADMS_aAAC ID#:', 'VAMS#:'},...
         'aAAC Task - Please enter information', [1 75]);
     subject                 = str2double(response{1});
     vamsNumber              = str2double(response{2});
@@ -26,7 +26,7 @@ v.hostaddress = java.net.InetAddress.getLocalHost ;
 v.hostIPaddress = char( v.hostaddress.getHostAddress);
 v.path.experiment              = [pwd filesep];
 
-v.subID                        = sprintf('ADMS_aACC_%03d', subject);
+v.subID                        = sprintf('ADMS_aAAC_%03d', subject);
 v.vamsNumber                   = vamsNumber;
 v.timestamp                    = datestr(now,30);
 v.path.subject                 = [v.path.experiment 'logs' filesep v.subID filesep 'VAMS' filesep];

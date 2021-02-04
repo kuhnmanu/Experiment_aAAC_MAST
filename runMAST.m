@@ -4,7 +4,7 @@ if nargin < 1
 subject = '';
 end
 
-response = inputdlg({'ADMS_aACC ID#:'},...
+response = inputdlg({'ADMS_aAAC ID#:'},...
     'run MAST - Please enter information', [1 75],...
     {subject});
 if isempty(response)
@@ -109,7 +109,7 @@ p.com.lpt.duration                      = 0.005;
 
 % set subject directory
 p.timestamp                    = datestr(now,30);
-p.subID = sprintf('ADMS_aACC_%03d',str2double(subject));
+p.subID = sprintf('ADMS_aAAC_%03d',str2double(subject));
 mkdir(fullfile(HomeDir,DataDir,p.subID  ));
 
 % set datafile name and check for existing file

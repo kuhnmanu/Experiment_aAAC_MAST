@@ -63,7 +63,7 @@ while runNumber <= totalRuns
     end
     if runNumber < 2
         %%% Print visual feedback for experimenter to confirm
-        response = inputdlg({'ADMS_aACC ID#:', 'Session pre ("pre") / post ("post") MAST', 'Shock Min in mA', 'Shock Max in mA', 'Run:', 'Comment:'},...
+        response = inputdlg({'ADMS_aAAC ID#:', 'Session pre ("pre") / post ("post") MAST', 'Shock Min in mA', 'Shock Max in mA', 'Run:', 'Comment:'},...
             'aAAC Task - Please enter information', [1 75],...
             {subject,  prePostSession, num2str(minShockStrengthInmA), num2str(maxShockStrengthInmA), num2str(runNumber), comment});
         if isempty(response)
@@ -205,7 +205,7 @@ end
         p.hostIPaddress = char( p.hostaddress.getHostAddress);
         p.path.experiment              = [pwd filesep];
         p.path.instructionsFolder      = [p.path.experiment 'instructions/aAAC_Task_instructionsSlides_noButtons/']; % When using instructions without button presses
-        p.subID                        = sprintf('ADMS_aACC_%03d',str2double(subject));
+        p.subID                        = sprintf('ADMS_aAAC_%03d',str2double(subject));
         p.timestamp                    = datestr(now,30);
         p.path.subject                 = [p.path.experiment 'logs' filesep p.subID filesep];
         p.path.save                    = [p.path.subject '_tmp_' p.subID '_' p.prePostMAST '_run' num2str(p.runNumber) '_noJoystick_' p.timestamp];

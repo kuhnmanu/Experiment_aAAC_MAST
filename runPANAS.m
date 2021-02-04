@@ -28,7 +28,7 @@ pn.hostaddress = java.net.InetAddress.getLocalHost ;
 pn.hostIPaddress = char( pn.hostaddress.getHostAddress);
 pn.path.experiment              = [pwd filesep];
 
-pn.subID                        = sprintf('ADMS_aACC_%03d', subject);
+pn.subID                        = sprintf('ADMS_aAAC_%03d', subject);
 pn.panasNumber                   = panasNumber;
 pn.timestamp                    = datestr(now,30);
 pn.path.subject                 = [pn.path.experiment 'logs' filesep pn.subID filesep 'PANAS' filesep];
