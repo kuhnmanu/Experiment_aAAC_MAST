@@ -100,8 +100,7 @@ end
 HomeDir = pwd;
 DataDir = 'logs';
 p.path.experiment = HomeDir;
-addpath(genpath([p.path.experiment 'DS8R-MATLAB_official']));      % Add Digitimer dll and functions
-addpath(genpath([p.path.experiment 'daqtoolbox']));                % Add ML NI Daq control functions
+addpath(genpath([p.path.experiment filesep 'daqtoolbox']));                % Add ML NI Daq control functions
 p.niDaq = digitalio('nidaq','Dev1');
 addline(p.niDaq,0:7,0,'out');                                      % Add Line 0-7 of Port 0 for output
 putvalue(p.niDaq,0)

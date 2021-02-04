@@ -225,8 +225,10 @@ end
         KbName('UnifyKeyNames');
         p.keys.space                            = KbName('space');
         p.keys.next                             = KbName('RightArrow');
-        p.keys.up                               = KbName('UpArrow');
-        p.keys.down                             = KbName('DownArrow');
+        %p.keys.up                               = KbName('UpArrow');
+        %p.keys.down                             = KbName('DownArrow');
+        p.keys.up                               = KbName('r');
+        p.keys.down                             = KbName('y');
         p.keys.prev                             = KbName('LeftArrow');
         p.keys.trigger                          = KbName('t');
         
