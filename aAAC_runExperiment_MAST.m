@@ -699,6 +699,7 @@ end
     function [t] = WaitForDummyScans(n)
         if p_mri_on == 1
             pulse=0;
+            tmpTime = GetSecs();
             DrawFormattedText(p.ptb.w,'Get Ready','center',p_ptb_midpoint_y,p_stim_white);
             Screen('Flip', p_ptb_w);
             while pulse <=n
@@ -709,7 +710,9 @@ end
                         keyIsDown   = [];
                         keyCode     = [];
                         pulse       = pulse+1;
-                        fprintf('This was scanner pulse number: %d \n', pulse);
+                        fprintf('This was scanner pulse number: %d. Inter-Scan-Intervall: %.3fs \n', pulse, t-tmpTime);
+                        p.mri.dummyScanAndFirstTimes(pulse) = t;
+                        tmpTime = t;
                     end
                 end
             end
