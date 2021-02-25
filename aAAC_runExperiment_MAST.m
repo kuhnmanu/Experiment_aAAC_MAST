@@ -238,7 +238,7 @@ end
         %%%%%%%%%%%%%%%%%%%%%%%%%%% Joystick Settings                      % Change these values for your setup!
         p.joy.mrjoystick                        = mr_joystick;
         if p.joy.mrjoystick
-            p.joy.accelarationFactor            = 1;                       % Jump how many pxls
+            p.joy.accelarationFactor            = 0.75;                       % Jump how many pxls
         else
             p.joy.accelarationFactor            = 2;                       % Jump how many pxls
         end
