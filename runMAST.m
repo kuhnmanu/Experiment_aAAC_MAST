@@ -435,7 +435,7 @@ blockStart = GetSecs;
 for trial = 1:11
     
     % draw question
-    DrawFormattedText(p.ptb.w,'Please indicate how you are feeling right now about \n the cognitive task you are about to begin','center',Yres/5,White,90,[],[],1.25);
+    DrawFormattedText(p.ptb.w,'Please indicate how you are feeling right now about \n the cognitive task','center',Yres/5,White,90,[],[],1.25);
     
     DrawFormattedText(p.ptb.w,question{trial},'center',Yres/2.8,Yellow,90,[],[],1.25);
     
@@ -508,7 +508,7 @@ for trial = 1:11
         else
             Screen('FrameRect',p.ptb.w,Red,Rbox,2);
         end
-        DrawFormattedText(p.ptb.w,'Please indicate how you are feeling right now about \n the cognitive task you are about to begin','center',Yres/5,White,90,[],[],1.25);
+        DrawFormattedText(p.ptb.w,'Please indicate how you are feeling right now about \n the cognitive task','center',Yres/5,White,90,[],[],1.25);
         
         DrawFormattedText(p.ptb.w,question{trial},'center',Yres/2.8,Yellow,90,[],[],1.25);
         
