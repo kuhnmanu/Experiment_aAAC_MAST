@@ -677,7 +677,7 @@ end
             p.TrialRecord.take(end+1)                   = take;
             p.TrialRecord.TrialShocked(end+1)           = trialShocked;
             p.TrialRecord.yTraceFrameRate(end+1,1)      = {yTraceFrameRate};
-            p.TrialRecord.yTraceFrameRateTime(end+1,1)  = {yTraceFrameTime}; % ZY edit
+            p.TrialRecord.yTraceFrameRateTime(end+1,1)  = {yTraceFrameRateTime}; % ZY edit
             p.TrialRecord.yTraceFull(end+1,1)           = {yTrace};
             p.TrialRecord.ReactionTime(end+1)           = reactionTime;
             p.TrialRecord.JoyInitMoveTime(end+1)        = joyInitMoveTime;
