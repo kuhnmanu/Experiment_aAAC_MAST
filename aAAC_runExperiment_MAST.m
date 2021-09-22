@@ -281,9 +281,8 @@ end
             p.TrialRecord.Initialized               = 0;
             p.TrialRecord.boundary                  = [];
             p.TrialRecord.yTraceFrameRate           = {};
-            p.TrialRecord.yTraceFrameRateTime           = {}; % ZY edit
+            p.TrialRecord.yTraceFrameRateTime       = {}; % ZY edit
             p.TrialRecord.yTraceFull                = {};
-            p.TrialRecord.yTraceFullTime                = {}; % ZY edit
             p.TrialRecord.ReactionTime              = [];
             p.TrialRecord.Choice                    = {};
             p.TrialRecord.JoyInitMoveTime           = [];
@@ -535,10 +534,9 @@ end
         lock = 0;
         yTraceCount = 0;
         yTrace = 0;
-        yTraceTime = []; % zy edit
-        yTraceFrameTime = []; % zy edit
         frameN = 0;
         yTraceFrameRate = [];
+        yTraceFrameTime = []; % zy edit
         joyInitMoveTime         = 0;
         joyInitMove             = 0;
         [~,joyCalYPosition]     =  WinJoystickMex(0);
@@ -557,33 +555,9 @@ end
                 (p_ptb_midpoint_y-p_stim_circleSize-(yTrace(end)*p_joy_accelarationFactor))...
                 (p_ptb_midpoint_x+p_stim_circleSize) (p_ptb_midpoint_y+p_stim_circleSize-(yTrace(end)*p_joy_accelarationFactor))],p_stim_penWidthPxlCircle);
             vbl = Screen('Flip', p_ptb_w);
-            
-            % yTraceFrameRate(end+1) = yTrace(end); [zy delete]
+            yTraceFrameRate(end+1)        = yTrace(end);
+            yTraceFrameRateTime(end+1)    = vbl; % ZY edit
             frameN = frameN+1;
-            % ZY add <<<
-            %%% This is to guarantee all variables are correctly initialized
-            %%% I did not force yTraceTime(1)=vbl so we can detect something went wrong with the "-1" flag
-            %%% In analysis, discard both "p.TrialRecord.yTraceFull(1)" and "p.TrialRecord.yTraceFullTime(1)" if the latter = -1
-            if ~exist('yTrace','var')
-                yTrace=0;
-            end
-            if ~exist('yTraceTime','var')
-                yTraceTime = -1;
-            else 
-                if isempty(yTraceTime)
-                    yTraceTime(1)=vbl;
-                end
-            end
-            if frameN == 1
-                %%% Redundant, here in case yTraceFrameRate and yTraceFrameTime errors using (end+1) when empty
-                %%% In analysis, free feel to remove the 1st element in yTraceFrame and yTraceFrameTime [optional, no real impact]
-                yTraceFrameRate(1) = 0;
-                yTraceFrameTime(1) = vbl;
-            else
-                yTraceFrameRate(end+1) = yTrace(end);
-                yTraceFrameTime(end+1) = yTraceTime(end);
-            end
-            % >>> ZY add
             if frameN == 1
                 putLog(vbl, 'FirstChoiceFlip');
                 putMark(p.com.lpt.CueOnset);
@@ -593,8 +567,7 @@ end
             %%%%%%%%%%%%%%   WINDOWS VIA KBQUEUE. THIS HAS a up to 70kHZ sampling rate. Can be reduced but does have a gap
             %%%%%%%%%%%%%%   for flipping of ifi/2.5 (~6.7ms)
             while (GetSecs() < (vbl + p_ptb_ifi/2.5)) && (lock == 0)
-                t_ = GetSecs();
-                yTraceCount = yTraceCount+1; % zy add
+                yTraceCount = yTraceCount+1;
                 [~, newY] = WinJoystickMex(0);
                 % Check for initial Joystick movement and get time
                 if (joyInitMove == 0) && (newY~=joyCalYPosition)
@@ -607,7 +580,7 @@ end
                 %%% This one might be better if joystick returns reliably
                 %%% back to middle point (develop-joy doesn't)
                 %yTrace(yTraceCount) = (p_joy_midPosition - newY)*p_joy_ScreenRelation;
-                yTraceTime(yTraceCount) = t_; % zy add
+                
                 % Lock if decision is made
                 if yTrace(end) >= (p_stim_distFromCenterAbs/p_joy_accelarationFactor)
                     lockTime = GetSecs();
@@ -701,19 +674,18 @@ end
         putLog(fbFirstFlipTime, 'FirstFeedbackFlip');
         %%% Record outcomes making use of waitTime
         if runNumber > 0
-            p.TrialRecord.take(end+1)               = take;
-            p.TrialRecord.TrialShocked(end+1)       = trialShocked;
-            p.TrialRecord.yTraceFrameRate(end+1,1)  = {yTraceFrameRate};
+            p.TrialRecord.take(end+1)                   = take;
+            p.TrialRecord.TrialShocked(end+1)           = trialShocked;
+            p.TrialRecord.yTraceFrameRate(end+1,1)      = {yTraceFrameRate};
             p.TrialRecord.yTraceFrameRateTime(end+1,1)  = {yTraceFrameTime}; % ZY edit
-            p.TrialRecord.yTraceFull(end+1,1)       = {yTrace}; 
-            p.TrialRecord.yTraceFullTime(end+1,1)       = {yTraceTime}; % ZY edit
-            p.TrialRecord.ReactionTime(end+1)       = reactionTime;
-            p.TrialRecord.JoyInitMoveTime(end+1)    = joyInitMoveTime;
-            p.TrialRecord.Choice(end+1)             = {choice};
-            p.TrialRecord.ChoiceDirection(end+1)    = {choiceDirection};
-            p.TrialRecord.TotalOffersAccum          = p.TrialRecord.TotalOffersAccum + rewardLevel;
-            p.TrialRecord.TotalOffersInCentsAccum   = p.TrialRecord.TotalOffersInCentsAccum + rewardLevelInCents;
-            p.TrialRecord.ShockStrengtInmA(end+1)   = shockStrengthInmA;
+            p.TrialRecord.yTraceFull(end+1,1)           = {yTrace};
+            p.TrialRecord.ReactionTime(end+1)           = reactionTime;
+            p.TrialRecord.JoyInitMoveTime(end+1)        = joyInitMoveTime;
+            p.TrialRecord.Choice(end+1)                 = {choice};
+            p.TrialRecord.ChoiceDirection(end+1)        = {choiceDirection};
+            p.TrialRecord.TotalOffersAccum              = p.TrialRecord.TotalOffersAccum + rewardLevel;
+            p.TrialRecord.TotalOffersInCentsAccum       = p.TrialRecord.TotalOffersInCentsAccum + rewardLevelInCents;
+            p.TrialRecord.ShockStrengtInmA(end+1)       = shockStrengthInmA;
         end
         p.log.sessTake(end+1)                   = take;
         p.log.sessRewOffer(end+1)               = rewardLevel;
