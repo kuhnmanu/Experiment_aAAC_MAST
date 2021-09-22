@@ -536,7 +536,7 @@ end
         yTrace = 0;
         frameN = 0;
         yTraceFrameRate = [];
-        yTraceFrameTime = []; % zy edit
+        yTraceFrameRateTime = []; % zy edit
         joyInitMoveTime         = 0;
         joyInitMove             = 0;
         [~,joyCalYPosition]     =  WinJoystickMex(0);
