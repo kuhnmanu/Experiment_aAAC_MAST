@@ -329,7 +329,7 @@ end
         p.TrialRecord.AversionGridSteps = 3;
         p.TrialRecord.RewOfferRound = 10;    % limits reward mag to these intervals
         p.TrialRecord.AverOfferRound = 10;    % limits aversion prob to these intervals
-        p.TrialRecord.minorGridSize = 10;    % Takes care of unbalanced trial selection for boundary cases 
+        p.TrialRecord.minorGridSize = 1;    % Takes care of unbalanced trial selection for boundary cases 
         p.TrialRecord.RewardToCentsScaleFactor = 0.5; % e.g., 0.5 means that reward of 100 will be transformed to 50 cents
         p.TrialRecord.NumberOfLevels = length(p.TrialRecord.AversionLow:p.TrialRecord.AverOfferRound:p.TrialRecord.AversionHigh);
         p.log.sessShockLevelsInmA = linspace(p.log.minShockStrengthInmA,p.log.maxShockStrengthInmA,p.TrialRecord.NumberOfLevels);
