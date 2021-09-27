@@ -133,7 +133,7 @@ p.TrialRecord.AverOffer = [p.TrialRecord.AverOffer averOut];
         
         switch dbCorrection
             case 'random'
-                if min(d(:)) > 1     % if boundary is entirely outside of the space, just choose randomly
+                if min(d(:)) > minorGridSize     % if boundary is entirely outside of the space, just choose randomly
                     disp('--- boundary outside of space, select random trial ---');
                     selectRandomTrial;  % using the nested function
                     rOut = rewOut;
@@ -158,7 +158,7 @@ p.TrialRecord.AverOffer = [p.TrialRecord.AverOffer averOut];
                     end
                 end
             case 'fixed'
-                if min(d(:)) > 1     % if boundary is entirely outside of the space, just choose randomly
+                if min(d(:)) > minorGridSize     % if boundary is entirely outside of the space, just choose randomly
                     disp('\n --- boundary outside of space, set boundary to x =1, I = 90 ---');
                     boundary(1) = 1;
                     boundary(2) = 90;
