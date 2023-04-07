@@ -259,7 +259,7 @@ for trial = 1:size(question,2)
         
         Screen('Flip',pn.ptb.w);
         % Pauses to avoid moving box too quickly
-        WaitSecs(.1);
+        WaitSecs(.4);
         moveCycles = moveCycles+1;
         responseTime = GetSecs() - startTime;
     end
